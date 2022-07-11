@@ -7,13 +7,12 @@ export const Register = () => {
 
           {/* email */}
           <p className="field field-icon">
-            <label for="email">
+            <label htmlFor="email">
               <span>
                 <i className="fas fa-envelope"></i>
               </span>
             </label>
             <input
-              formControlName="email"
               type="email"
               name="email"
               id="email"
@@ -23,13 +22,12 @@ export const Register = () => {
 
           {/* <fullname */}
           <p className="field field-icon">
-            <label for="fullname">
+            <label htmlFor="fullname">
               <span>
                 <i className="fas fa-user"></i>
               </span>
             </label>
             <input
-              formControlName="fullname"
               type="text"
               name="fullname"
               id="fullname"
@@ -39,13 +37,12 @@ export const Register = () => {
 
           {/* phoneNumber */}
           <p className="field field-icon">
-            <label for="phoneNumber">
+            <label htmlFor="phoneNumber">
               <span>
                 <i className="fas fa-phone"></i>
               </span>
             </label>
             <select
-              formControlName="phoneCode"
               name="phoneCode"
               id="phoneCode"
               className="phoneCode"
@@ -54,7 +51,6 @@ export const Register = () => {
               <option value="2"> </option>
             </select>
             <input
-              formControlName="phoneNumber"
               type="phoneNumber"
               name="phoneNumber"
               id="phoneNumber"
@@ -64,13 +60,12 @@ export const Register = () => {
 
           {/* photoUrl */}
           <p className="field field-icon">
-            <label for="fullname">
+            <label htmlFor="fullname">
               <span>
                 <i className="fa fa-image"></i>
               </span>
             </label>
             <input
-              formControlName="photo"
               type="text"
               name="photo"
               placeholder="Add image url"
@@ -81,13 +76,12 @@ export const Register = () => {
 
           <div formGroupName="passwords">
             <p className="field field-icon">
-              <label for="password">
+              <label htmlFor="password">
                 <span>
                   <i className="fas fa-lock"></i>
                 </span>
               </label>
               <input
-                formControlName="password"
                 type="password"
                 name="password"
                 id="password"
@@ -97,13 +91,12 @@ export const Register = () => {
 
             {/* rePassword */}
             <p className="field field-icon">
-              <label for="rePassword">
+              <label htmlFor="rePassword">
                 <span>
                   <i className="fas fa-lock"></i>
                 </span>
               </label>
               <input
-                formControlName="rePassword"
                 type="password"
                 name="rePassword"
                 id="rePassword"

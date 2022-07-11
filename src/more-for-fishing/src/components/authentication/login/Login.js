@@ -7,13 +7,12 @@ export const Login = () => {
 
           {/* email */}
           <p className="field field-icon">
-            <label for="email">
+            <label htmlFor="email">
               <span>
                 <i className="fas fa-envelope"></i>
               </span>
             </label>
             <input
-              formControlName="email"
               type="email"
               name="email"
               id="email"
@@ -23,13 +22,12 @@ export const Login = () => {
 
           {/* password */}
           <p className="field field-icon">
-            <label for="password">
+            <label htmlFor="password">
               <span>
                 <i className="fas fa-lock"></i>
               </span>
             </label>
             <input
-              formControlName="password"
               type="password"
               name="password"
               id="password"
