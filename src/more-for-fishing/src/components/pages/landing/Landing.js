@@ -1,7 +1,7 @@
 import './Landing.css';
-import { Register } from '../../authentication/register/Register';
 
 export const Landing = () => {
+
   return (
     <div className="container">
       <div className="m-5">
