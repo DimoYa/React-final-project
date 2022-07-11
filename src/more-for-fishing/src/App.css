@@ -1,38 +1,145 @@
-.App {
-  text-align: center;
+body {
+    max-width: 1366px;
+    margin: auto !important;
+    position: relative;
+    min-height: 100vh;
+    border: 1px outset #147a9e;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.wrapper {
+    margin-bottom: 100px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.container {
+    width: 90%;
+    margin-bottom: auto;
+    background-color: #fff
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    text-align: center;
+    color: #147a9e;
+}
+
+
+a,
+button:hover {
+    cursor: pointer;
+}
+
+.container {
+
+    width: 40%;
+    margin: 2em auto 1rem;
+    padding: .5em;
+    border: .3em solid rgb(0, 212, 255);
+    border-radius: .5rem;
+    background-color: #f0f2f5;
+    box-shadow: 0 0 1em 0 #000;
+    text-align: center;
+}
+
+/* form */
+
+
+form fieldset {
+    padding: 0.8em;
+}
+
+form h2 {
+    padding-top: 0;
+    border-bottom: none;
+}
+
+form p {
+    padding-bottom: 0;
+    padding-top: 1.5rem;
+}
+
+form input, form textarea {
+    flex: 0 1 100%;
+    border: 1px solid;
+    padding: 0.3em;
+    border-top-right-radius: 0.3em;
+    border-bottom-right-radius: 0.3em;
+}
+
+form select  {
+    border-color: black;
+}
+
+form fieldset button {
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.6em 1.2em;
+    margin-top: 1.5rem;
+    width: 60%;
+    outline: none;
+}
+
+form label {
+    border: 1px solid;
+    border-right: none;
+    padding: 0.55em;
+    border-top-left-radius: 0.3em;
+    border-bottom-left-radius: 0.3em;
+    margin-bottom: 0;
+}
+
+form a {
+    color: #007bff;
+}
+
+.register .phoneNumber,
+.updateProfile .phoneNumber {
+    padding-right: 0.8em;
+}
+
+form .field {
+    display: flex;
+    padding-bottom: 0;
+}
+
+#buttons > a, #buttons > button {
+    margin: 20px 10px;
   }
+  
+  /* responsive */
+
+  @media (max-width: 800px) {
+    html {
+        font-size: 14px;
+    }
+    .d-flex {
+        display: block !important;
+    }
+    .navbar-nav {
+        align-items: flex-start;
+    }
+    .card-buttons {
+        align-self: center;
+    }
+    form.register > .container, form.login > .container, .profile> .container, .article.container, .admin.container {
+       width: 90% !important;
+    }
+    .loader {
+        margin: 140px;
+    }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media (min-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media (min-width: 1280px) {
+    html {
+        font-size: 18px;
+    }
 }
