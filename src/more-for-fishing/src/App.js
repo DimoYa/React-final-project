@@ -1,5 +1,6 @@
 import { Header } from './components/common/header/Header';
 import { Footer } from './components/common/footer/Footer';
+import { Landing } from './components/pages/landing/Landing';
 
 import './App.css';
 
@@ -8,7 +9,7 @@ function App() {
     <div>
       <Header />
 
-      <h1>Fishing blog</h1>
+      <Landing />
 
       <Footer />
     </div>
