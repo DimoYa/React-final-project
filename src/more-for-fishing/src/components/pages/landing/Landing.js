@@ -3,7 +3,7 @@ import './Landing.css';
 export const Landing = () => {
 
   return (
-    <div className="container">
+    <div className="landing-container">
       <div className="m-5">
         <h1 className="text-center ">Welcome to our fishing blog!</h1>
       </div>
@@ -12,7 +12,7 @@ export const Landing = () => {
 
       <div className="mt-5">
         <div className="d-flex justify-content-between">
-          <div className="card card border-primary mb-3 container-fluid content-row">
+          <div className="card text-white card border-primary mb-3 container-fluid content-row">
             <div className="card-body container-fluid content-row d-flex flex-column">
               <h4 className="card-title container-fluid">New member?</h4>
               <p className="card-text align-self-md-center">
@@ -26,7 +26,7 @@ export const Landing = () => {
             </div>
           </div>
           <div className="col py-3 px-md-5 bordered col-example"></div>
-          <div className="card card border-primary mb-3 container-fluid content-row">
+          <div className="card text-white card border-primary mb-3 container-fluid content-row">
             <div className="card-body container-fluid content-row d-flex flex-column">
               <h4 className="card-title container-fluid ">Already registered?</h4>
               <p className="card-text align-self-md-center">

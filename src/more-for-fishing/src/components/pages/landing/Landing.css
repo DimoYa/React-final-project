@@ -1,7 +1,16 @@
-.card.container-fluid {
-    background-color: #4ebced;;
+.container-fluid, .card-body {
+    background-color: #4ebced;
 }
 
-.container {
+.landing-container {
     width: 90%;
+    margin-bottom: auto;
+    background-color: #fff;
+    margin: 2em auto 1rem;
+    padding: .5em;
+    border: .3em solid rgb(0, 212, 255);
+    border-radius: .5rem;
+    background-color: #f0f2f5;
+    box-shadow: 0 0 1em 0 #000;
+    text-align: center;
 }
