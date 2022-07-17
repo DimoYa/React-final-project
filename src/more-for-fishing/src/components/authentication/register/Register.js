@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useState } from 'react';
 
 export const Register = () => {
@@ -217,7 +219,7 @@ export const Register = () => {
 
           <p className="text-center">
             Have an account?
-            <a href="/user/login">Log In</a>
+            <Link to="/user/login">Log In</Link>
           </p>
         </fieldset>
       </div>

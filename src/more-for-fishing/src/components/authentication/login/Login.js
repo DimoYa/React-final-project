@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useState } from 'react';
 
 export const Login = () => {
@@ -104,7 +106,7 @@ export const Login = () => {
 
           <p className="text-center">
             Don't have an account?
-            <a href="/user/register">Register</a>
+            <Link to="/user/register">Register</Link>
           </p>
         </fieldset>
       </div>
