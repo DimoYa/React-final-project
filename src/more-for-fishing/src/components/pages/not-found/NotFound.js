@@ -7,9 +7,9 @@ import './NotFound.css';
 
 export const NotFound = () => {
   return (
-    <div class="msg container">
-      <div fxFlex>404 We cannot find your page</div>
-      <div fxFlex>
+    <div className="msg container">
+      <div>404 We cannot find your page</div>
+      <div>
         <Loading />
       </div>
       <p>

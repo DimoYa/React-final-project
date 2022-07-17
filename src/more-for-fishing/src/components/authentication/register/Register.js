@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useState } from 'react';
+
+import * as authenticationService from '../../../services/authenticationService';
 
 export const Register = () => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    email: '',
+    username: '',
     fullname: '',
     phoneCode: '+359',
     phoneNumber: '',
@@ -13,6 +15,8 @@ export const Register = () => {
     password: '',
     rePassword: '',
   });
+
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -24,7 +28,14 @@ export const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log(values);
+    authenticationService
+      .register(values)
+      .then(() => {
+        navigate('/user/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const emailValidator = (e) => {
@@ -64,8 +75,8 @@ export const Register = () => {
     }));
   };
 
-  const { email, fullname, password, rePassword } = values;
-  const required = email && fullname && password && password && rePassword;
+  const { username, fullname, password, rePassword } = values;
+  const required = username && fullname && password && password && rePassword;
 
   const isFormValid = required && !Object.values(errors).some((x) => x);
 
@@ -84,10 +95,10 @@ export const Register = () => {
             </label>
             <input
               type="email"
-              name="email"
+              name="username"
               id="email"
               placeholder="user@gmail.com"
-              value={values.email}
+              value={values.username}
               onChange={changeHandler}
               onBlur={(e) => emailValidator(e)}
             />
