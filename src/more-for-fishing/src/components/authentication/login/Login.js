@@ -1,13 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useState } from 'react';
+
+import * as authenticationService from '../../../services/authenticationService';
 
 export const Login = () => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    email: '',
+    username: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -16,36 +20,31 @@ export const Login = () => {
     }));
   };
 
-
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log(values);
-  };
-
-  const emailvalidator = (e) => {
-    setErrors((state) => ({
-      ...state,
-      [e.target.name]: (!/\S+@\S+/.test(values[e.target.name]))
-    }));
+    authenticationService
+      .login(values)
+      .then(() => {
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const requiredField = (e) => {
-    setErrors(state => ({
-        ...state,
-        [e.target.name]: values[e.target.name].length < 1,
+    setErrors((state) => ({
+      ...state,
+      [e.target.name]: values[e.target.name].length < 1,
     }));
-}
+  };
 
-  
-  const { email, password } = values;
-  const required =
-  email.length > 0 &&
-  password.length > 0;
-  
-  
+  const { username, password } = values;
+  const required = username.length > 0 && password.length > 0;
+
   const isFormValid = required && !Object.values(errors).some((x) => x);
-  
+
   return (
     <form className="login" onSubmit={submitHandler}>
       <div className="container">
@@ -61,19 +60,17 @@ export const Login = () => {
             </label>
             <input
               type="email"
-              name="email"
+              name="username"
               id="email"
               placeholder="user@gmail.com"
-              value={values.email}
+              value={values.username}
               onChange={changeHandler}
-              onBlur={(e) => emailvalidator(e)}
+              onBlur={(e) => requiredField(e)}
             />
           </p>
 
-          {errors.email && (
-            <p className="alert alert-danger">
-              Email is not valid!!
-            </p>
+          {errors.username && (
+           <p className="alert alert-danger">Field is required!!</p>
           )}
 
           {/* password */}
@@ -95,9 +92,7 @@ export const Login = () => {
           </p>
 
           {errors.password && (
-            <p className="alert alert-danger">
-              Field is required!!
-            </p>
+            <p className="alert alert-danger">Field is required!!</p>
           )}
 
           <button className="btn btn-primary btn-block" disabled={!isFormValid}>

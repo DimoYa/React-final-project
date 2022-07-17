@@ -1,17 +1,33 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './Header.css';
 
+import * as authenticationService from '../../../services/authenticationService';
+
 export const Header = () => {
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    authenticationService
+      .logout()
+      .then(() => {
+        navigate('/user/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <header>
       <nav className="navbar navbar-dark bg-primary navbar-expand-md navbar-dark">
         <div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item" href="/">
-            <Link to="/">
-              <i className="fa fa-fw fa-home"></i><span>Home</span>
-            </Link>
+              <Link to="/">
+                <i className="fa fa-fw fa-home"></i>
+                <span>Home</span>
+              </Link>
             </li>
             <li className="nav-item" href="#">
               <Link to="/user/login">
@@ -59,7 +75,7 @@ export const Header = () => {
             </li>
           </ul>
           <ul className="navbar-nav mt-2 mt-lg-0">
-            <li className="nav-item" >
+            <li className="nav-item">
               <Link to="user/profile">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
@@ -69,10 +85,10 @@ export const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="user/logout">
+              <p onClick={logoutHandler}>
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
-              </Link>
+              </p>
             </li>
           </ul>
         </div>

@@ -11,7 +11,7 @@ export const Register = () => {
     fullname: '',
     phoneCode: '+359',
     phoneNumber: '',
-    photoUrl: '',
+    photo: '',
     password: '',
     rePassword: '',
   });
@@ -28,8 +28,10 @@ export const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    const { rePassword, ...userData } = values;
+
     authenticationService
-      .register(values)
+      .register(userData)
       .then(() => {
         navigate('/user/login');
       })
@@ -104,7 +106,7 @@ export const Register = () => {
             />
           </p>
 
-          {errors.email && (
+          {errors.username && (
             <p className="alert alert-danger">Email is not valid!!</p>
           )}
 
@@ -167,14 +169,20 @@ export const Register = () => {
             <p className="alert alert-danger">Invalid phone number!</p>
           )}
 
-          {/* photoUrl */}
+          {/* photo */}
           <p className="field field-icon">
             <label htmlFor="fullname">
               <span>
                 <i className="fa fa-image"></i>
               </span>
             </label>
-            <input type="text" name="photo" placeholder="Add image url" />
+            <input
+              type="text"
+              name="photo"
+              placeholder="Add image url"
+              value={values.photo}
+              onChange={changeHandler}
+            />
           </p>
 
           {/* password */}
