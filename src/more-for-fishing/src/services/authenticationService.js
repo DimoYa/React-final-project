@@ -60,7 +60,7 @@ export const logout = async () => {
     },
     body: JSON.stringify({}),
   });
-  
+
   if (response.ok) {
     localStorage.clear();
   } else {
@@ -75,4 +75,16 @@ export const isLoggedIn = () => {
 
 export const isAdmin = () => {
   return localStorage.getItem('isAdmin') === 'true';
+};
+
+export const returnId = () => {
+  return localStorage.getItem('id');
+};
+
+export const returnUserName = () => {
+  return localStorage.getItem('username');
+};
+
+export const returnUserPhoto = () => {
+  return localStorage.getItem('photo');
 };
