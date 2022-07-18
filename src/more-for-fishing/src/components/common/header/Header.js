@@ -12,7 +12,6 @@ export const Header = () => {
   const isAdmin = authenticationService.isAdmin();
   const avatar = authenticationService.returnUserPhoto();
 
-  console.log(isLogged);
 
   const logoutHandler = () => {
     authenticationService
