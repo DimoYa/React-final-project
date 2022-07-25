@@ -26,11 +26,28 @@ export const EditProfile = () => {
   }, []);
 
   const [user, setUser] = useState({});
+  const [errors, setErrors] = useState({});
 
   const changeHandler = (e) => {
     setUser((state) => ({
       ...state,
       [e.target.name]: e.target.value,
+    }));
+  };
+
+  const fullNameValidator = (e) => {
+    setErrors((state) => ({
+      ...state,
+      [e.target.name]: !/^([A-Z][a-z]+\s[A-Z][a-z]+)$/.test(
+        user[e.target.name]
+      ),
+    }));
+  };
+
+  const phoneValidator = (e) => {
+    setErrors((state) => ({
+      ...state,
+      [e.target.name]: !/^\d{9}$/.test(user[e.target.name]),
     }));
   };
 
@@ -55,6 +72,8 @@ export const EditProfile = () => {
       });
   };
 
+  const isFormValid = user.fullname && !Object.values(errors).some((x) => x);
+
   return (
     <form onSubmit={editHandler}>
       <div className="container updateProfile">
@@ -78,41 +97,56 @@ export const EditProfile = () => {
                   placeholder="Full Name"
                   defaultValue={user.fullname || ''}
                   onChange={changeHandler}
+                  onBlur={(e) => fullNameValidator(e)}
                 />
               </p>
 
-              {/* phone */}
+              {errors.fullname && (
+                <p className="alert alert-danger">
+                  Full name input field must contain two names (letters only)
+                  separated by a space!
+                </p>
+              )}
+
+              {/* phoneNumber */}
+
               <p className="field field-icon">
                 <label htmlFor="phoneNumber">
                   <span>
-                    <i className="fas fa-phone" />
+                    <i className="fas fa-phone"></i>
                   </span>
                 </label>
                 <select
                   name="phoneCode"
+                  id="phoneCode"
+                  className="phoneCode"
                   defaultValue={user.phoneCode}
                   onChange={changeHandler}
                 >
                   {codes.map((e, key) => {
                     return (
-                      <option
-                        key={key}
-                        value={e.value}
-                        selected={e.value === user.phoneCode}
-                      >
+                      <option key={key} value={e.value}  selected={e.value === user.phoneCode}>
                         {e.label}
                       </option>
                     );
                   })}
                 </select>
                 <input
+                  type="phoneNumber"
                   name="phoneNumber"
-                  type="text"
-                  placeholder="Phone number"
-                  onChange={changeHandler}
+                  id="phoneNumber"
+                  placeholder="885 888 888"
                   defaultValue={user.phoneNumber}
+                  onChange={changeHandler}
+                  onBlur={(e) => phoneValidator(e)}
                 />
               </p>
+
+              {errors.phoneNumber && (
+                <p className="alert alert-danger">Invalid phone number!</p>
+              )}
+
+              {/* photo */}
               <p className="field field-icon">
                 <label htmlFor="photo">
                   <span>
@@ -130,7 +164,11 @@ export const EditProfile = () => {
               <div className="buttons">
                 <button className="btn btn-warning">Cancel </button>
                 &nbsp;
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={!isFormValid}
+                >
                   Update Account
                 </button>
               </div>
