@@ -4,6 +4,12 @@ import { useState } from 'react';
 
 import * as authenticationService from '../../../services/authenticationService';
 
+const codes = [
+  { value: '+359', label: '+359' },
+  { value: '+44', label: '+44' },
+  { value: '+33', label: '+33' },
+];
+
 export const Register = () => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
@@ -150,9 +156,13 @@ export const Register = () => {
               value={values.pho}
               onChange={changeHandler}
             >
-              <option value="bg">+359</option>
-              <option value="gb">+44</option>
-              <option value="fr">+33</option>
+              {codes.map((e, key) => {
+                return (
+                  <option key={key} value={e.value}>
+                    {e.label}
+                  </option>
+                );
+              })}
             </select>
             <input
               type="phoneNumber"

@@ -20,9 +20,11 @@ export const getUser = async (profileId) => {
 };
 
 export const updateUser = async (profileId, user) => {
+
   const response = await fetch(`${baseUrl}/${profileId}`, {
     method: 'PUT',
     headers: {
+      'content-type': 'application/json',
       Authorization: `Kinvey ${localStorage.getItem('authtoken')}`,
     },
     body: JSON.stringify(user),

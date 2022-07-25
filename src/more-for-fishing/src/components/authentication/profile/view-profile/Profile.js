@@ -25,8 +25,6 @@ export const Profile = () => {
       });
   }, []);
 
-  console.log(user);
-
   return (
     <div className="profile">
       <div className="container">
