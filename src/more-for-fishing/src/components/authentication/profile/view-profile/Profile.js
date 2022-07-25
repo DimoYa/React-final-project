@@ -8,8 +8,7 @@ import { useEffect, useState } from 'react';
 import { Loading } from '../../../shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { submitHandler } from '../../../shared/confirm-box/Confirm';
 
 export const Profile = () => {
   const userId = authenticationService.returnId();
@@ -30,22 +29,11 @@ export const Profile = () => {
   }, []);
 
   const deleteHandler = () => {
-    confirmAlert({
-      title: 'Confirm delete profile',
-      message: 'Are you sure that you want to delete your profile?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => confirmDeleteHandler(),
-        },
-        {
-          label: 'No',
-          onClick: (e) => (e),
-        },
-      ],
-      closeOnEscape: true,
-      closeOnClickOutside: true,
-    });
+    submitHandler(
+      confirmDeleteHandler,
+      'Confirm deletion',
+      'Are you sure that you want to delete your profile?'
+    );
   };
 
   const confirmDeleteHandler = () => {

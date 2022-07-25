@@ -26,20 +26,3 @@
     margin: .5em;
     font-weight: bold;
 }
-
-.react-confirm-alert-body {
-    width: auto !important;
-}
-
-.react-confirm-alert-body > h1 {
-    font-size: 1.8em;
-}
-
-.react-confirm-alert-button-group {
-    display: block !important;
-    text-align:center;
-}
-
-.react-confirm-alert-button-group button {
-    margin:0px 5px;
-}
