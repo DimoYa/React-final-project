@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import { Loading } from '../../../shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 export const Profile = () => {
   const userId = authenticationService.returnId();
   const isAdmin = authenticationService.isAdmin();
@@ -27,10 +30,29 @@ export const Profile = () => {
   }, []);
 
   const deleteHandler = () => {
+    confirmAlert({
+      title: 'Confirm delete profile',
+      message: 'Are you sure that you want to delete your profile?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => confirmDeleteHandler(),
+        },
+        {
+          label: 'No',
+          onClick: (e) => (e),
+        },
+      ],
+      closeOnEscape: true,
+      closeOnClickOutside: true,
+    });
+  };
+
+  const confirmDeleteHandler = () => {
     userService
       .deleteUser(userId)
       .then(() => {
-        navigate('/user/login');
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +100,11 @@ export const Profile = () => {
                 Update profile
               </Link>
               {!isAdmin && (
-                <button type="button" className="btn btn-danger" onClick={deleteHandler}>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={deleteHandler}
+                >
                   Delete profile
                 </button>
               )}
