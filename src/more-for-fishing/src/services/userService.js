@@ -20,7 +20,6 @@ export const getUser = async (profileId) => {
 };
 
 export const updateUser = async (profileId, user) => {
-
   const response = await fetch(`${baseUrl}/${profileId}`, {
     method: 'PUT',
     headers: {
@@ -35,6 +34,23 @@ export const updateUser = async (profileId, user) => {
   if (response.ok) {
     return result;
   } else {
+    throw result.description;
+  }
+};
+
+export const deleteUser = async (profileId) => {
+  const response = await fetch(`${baseUrl}/${profileId}?hard=true`, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Kinvey ${localStorage.getItem('authtoken')}`,
+    },
+  });
+
+  if (response.ok) {
+    localStorage.clear();
+  } else {
+    const result = await response.json();
     throw result.description;
   }
 };

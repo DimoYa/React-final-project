@@ -6,13 +6,14 @@ import * as userService from '../../../../services/userService';
 import defaultAvatarPath from '../../../../assets/default-avatar-profile.png';
 import { useEffect, useState } from 'react';
 import { Loading } from '../../../shared/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
   const userId = authenticationService.returnId();
   const isAdmin = authenticationService.isAdmin();
 
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     userService
@@ -25,7 +26,16 @@ export const Profile = () => {
       });
   }, []);
 
-  
+  const deleteHandler = () => {
+    userService
+      .deleteUser(userId)
+      .then(() => {
+        navigate('/user/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="profile">
@@ -67,8 +77,8 @@ export const Profile = () => {
               >
                 Update profile
               </Link>
-              {isAdmin && (
-                <button type="button" className="btn btn-danger">
+              {!isAdmin && (
+                <button type="button" className="btn btn-danger" onClick={deleteHandler}>
                   Delete profile
                 </button>
               )}
