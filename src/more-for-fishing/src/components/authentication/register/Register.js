@@ -4,6 +4,9 @@ import { useState } from 'react';
 
 import * as authenticationService from '../../../services/authenticationService';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const codes = [
   { value: '+359', label: '+359' },
   { value: '+44', label: '+44' },
@@ -39,10 +42,11 @@ export const Register = () => {
     authenticationService
       .register(userData)
       .then(() => {
+        toast.success('Successfully Registered!');
         navigate('/user/login');
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
   };
 
@@ -250,6 +254,7 @@ export const Register = () => {
             Have an account?
             <Link to="/user/login">Log In</Link>
           </p>
+
         </fieldset>
       </div>
     </form>

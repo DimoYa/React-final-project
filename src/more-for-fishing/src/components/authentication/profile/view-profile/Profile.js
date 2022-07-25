@@ -9,6 +9,7 @@ import { Loading } from '../../../shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
+import { toast } from 'react-toastify';
 
 export const Profile = () => {
   const userId = authenticationService.returnId();
@@ -41,9 +42,10 @@ export const Profile = () => {
       .deleteUser(userId)
       .then(() => {
         navigate('/');
+        toast.success('Successfully deleted profile!');
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
   };
 

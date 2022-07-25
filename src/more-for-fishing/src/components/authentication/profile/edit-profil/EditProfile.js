@@ -3,6 +3,7 @@ import * as userService from '../../../../services/userService';
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const codes = [
   { value: '+44', label: '+44' },
@@ -65,10 +66,11 @@ export const EditProfile = () => {
       .updateUser(userId, body)
       .then(() => {
         localStorage['photo'] = body.photo;
+        toast.success('Successfully updated profile!');
         navigate('/user/profile');
       })
       .catch((err) => {
-        console.log(err);
+        toast.success(err);
       });
   };
 

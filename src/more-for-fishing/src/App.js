@@ -10,6 +10,7 @@ import { Profile } from './components/authentication/profile/view-profile/Profil
 import { EditProfile } from './components/authentication/profile/edit-profil/EditProfile';
 
 import './App.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
+      <ToastContainer/>
       <Footer />
     </div>
   );

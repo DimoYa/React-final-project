@@ -86,7 +86,7 @@ export const Landing = () => {
                   View and manage your profile
                 </p>
                 <div id="buttons">
-                  <Link to="#" className="btn btn-secondary">
+                  <Link to="/user/profile" className="btn btn-secondary">
                     <i className="fas fa-user-plus p-1"></i>My profile
                   </Link>
                 </div>

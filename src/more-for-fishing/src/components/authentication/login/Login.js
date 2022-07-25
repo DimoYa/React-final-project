@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import * as authenticationService from '../../../services/authenticationService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login = () => {
   const [errors, setErrors] = useState({});
@@ -26,10 +28,11 @@ export const Login = () => {
     authenticationService
       .login(values)
       .then(() => {
+        toast.success('Successfully Login!');
         navigate('/');
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
   };
 
@@ -70,7 +73,7 @@ export const Login = () => {
           </p>
 
           {errors.username && (
-           <p className="alert alert-danger">Field is required!!</p>
+            <p className="alert alert-danger">Field is required!!</p>
           )}
 
           {/* password */}
