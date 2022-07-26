@@ -1,5 +1,4 @@
-import { Link } from '@mui/material';
-import { unstable_requirePropFactory } from '@mui/utils';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as adminService from '../../services/adminService';
 
@@ -50,21 +49,21 @@ export const Admin = () => {
                     </Link>
                     &nbsp;
                     <Link
-                      to={`/user/profile/edit/${user._id}`}
                       className="btn btn-success"
+                      to={`/user/profile/edit/${user._id}`}
                     >
-                      Update user info
+                      Update profile
                     </Link>
                     &nbsp;
                     {user._kmd['roles'] === undefined ? (
-                      <Link type="button" className="btn btn-danger">
+                      <Link to="/" className="btn btn-danger">
                         Disable user
                       </Link>
                     ) : null}
                     {user._kmd['status'] !== undefined ? (
-                      <Link type="button" className="btn btn-success">
-                      Enable user
-                    </Link>
+                      <Link to="/" className="btn btn-success">
+                        Enable user
+                      </Link>
                     ) : null}
                   </>
                 ) : null}
