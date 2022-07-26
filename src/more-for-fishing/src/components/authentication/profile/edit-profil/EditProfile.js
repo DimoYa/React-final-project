@@ -67,7 +67,7 @@ export const EditProfile = () => {
       .then(() => {
         localStorage['photo'] = body.photo;
         toast.success('Successfully updated profile!');
-        navigate('/user/profile');
+        navigate(`/user/profile/${userId}`);
       })
       .catch((err) => {
         toast.success(err);

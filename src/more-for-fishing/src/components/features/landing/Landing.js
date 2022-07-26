@@ -7,6 +7,7 @@ import * as authenticationService from '../../../services/authenticationService'
 export const Landing = () => {
   const isLogged = authenticationService.isLoggedIn();
   const isAdmin = authenticationService.isAdmin();
+  const userId = authenticationService.returnId();
 
   return (
     <div className="landing-container">
@@ -86,7 +87,7 @@ export const Landing = () => {
                   View and manage your profile
                 </p>
                 <div id="buttons">
-                  <Link to="/user/profile" className="btn btn-secondary">
+                  <Link to={`/user/profile/${userId}`} className="btn btn-secondary">
                     <i className="fas fa-user-plus p-1"></i>My profile
                   </Link>
                 </div>

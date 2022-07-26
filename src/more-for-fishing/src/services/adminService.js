@@ -1,5 +1,6 @@
 import { environment } from '../environments/environment';
 import { appKey, appMasterSecret } from '../kinvey.tokens';
+import { Buffer } from 'buffer';
 
 const baseUrl = environment.apiUserUrl;
 
@@ -30,9 +31,7 @@ export const suspendUser = async (profileId) => {
     },
   });
 
-  if (response.ok) {
-    localStorage.clear();
-  } else {
+  if (!response.ok) {
     const result = await response.json();
     throw result.description;
   }
@@ -42,16 +41,14 @@ export const restoreUser = async (profileId) => {
   const response = await fetch(`${baseUrl}/${profileId}/_restore`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
-      Authorization: `Basic ${Buffer.from(
-        `${appKey}:${appMasterSecret}`
-      ).toString('base64')}`,
+        Authorization: `Basic ${Buffer.from(`${appKey}:${appMasterSecret}`).toString(
+            'base64'
+          )}`,
+        'Content-Type': 'application/json',
     },
   });
 
-  if (response.ok) {
-    localStorage.clear();
-  } else {
+  if (!response.ok) {
     const result = await response.json();
     throw result.description;
   }

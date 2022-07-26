@@ -22,7 +22,7 @@ function App() {
         <Route path='/' element={<Landing />} />
         <Route path='/user/register' element={<Register />} />
         <Route path='/user/login' element={<Login />} />
-        <Route path='/user/profile' element={<Profile />} />
+        <Route path='/user/profile/:userId' element={<Profile />} />
         <Route path='/user/profile/edit/:userId' element={<EditProfile />} />
         <Route path='/admin/user-management' element={<Admin />} />
         <Route path='*' element={<NotFound />} />

@@ -11,6 +11,7 @@ export const Header = () => {
 
   const isLogged = authenticationService.isLoggedIn();
   const isAdmin = authenticationService.isAdmin();
+  const userId = authenticationService.returnId();
   const avatar = authenticationService.returnUserPhoto();
 
   const logoutHandler = () => {
@@ -98,7 +99,7 @@ export const Header = () => {
             <>
               <ul className="navbar-nav mt-2 mt-lg-0">
                 <li className="nav-item">
-                  <Link to="user/profile">
+                  <Link to={`user/profile/${userId}`}>
                     <img
                       src={
                         avatar === 'null' || avatar === ''

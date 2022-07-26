@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as adminService from '../../services/adminService';
+import { toast } from 'react-toastify';
 
 import './Admin.css';
 
@@ -18,6 +19,28 @@ export const Admin = () => {
       });
   }, []);
 
+  const suspendUserHandler = (userId) => {
+    adminService
+      .suspendUser(userId)
+      .then(() => {
+        toast.success('Successfully suspended user!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
+
+  const restoreUserHandler = (userId) => {
+    adminService
+      .restoreUser(userId)
+      .then(() => {
+        toast.success('Successfully restored user!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
+
   return (
     <div className="container admin">
       <h3>Admin panel - User management</h3>
@@ -30,7 +53,7 @@ export const Admin = () => {
                 <p>
                   {' '}
                   <i className="fas fa-ban" />
-                  Disabled
+                  Suspended
                 </p>
               ) : null}
               {user._kmd['roles'] !== undefined &&
@@ -44,7 +67,10 @@ export const Admin = () => {
               <div id="buttons">
                 {user._kmd['status'] === undefined ? (
                   <>
-                    <Link to="/" className="btn btn-info">
+                    <Link
+                      to={`/user/profile/${user._id}`}
+                      className="btn btn-info"
+                    >
                       Profile details
                     </Link>
                     &nbsp;
@@ -56,16 +82,24 @@ export const Admin = () => {
                     </Link>
                     &nbsp;
                     {user._kmd['roles'] === undefined ? (
-                      <Link to="/" className="btn btn-danger">
-                        Disable user
-                      </Link>
-                    ) : null}
-                    {user._kmd['status'] !== undefined ? (
-                      <Link to="/" className="btn btn-success">
-                        Enable user
-                      </Link>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => suspendUserHandler(user._id)}
+                      >
+                        Suspend profile
+                      </button>
                     ) : null}
                   </>
+                ) : null}
+                {user._kmd['status'] !== undefined ? (
+                  <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => restoreUserHandler(user._id)}
+                  >
+                    Restore user
+                  </button>
                 ) : null}
               </div>
               <hr />
