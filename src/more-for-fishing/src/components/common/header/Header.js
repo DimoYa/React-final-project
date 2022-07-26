@@ -38,13 +38,13 @@ export const Header = () => {
             </li>
             {!isLogged && (
               <>
-                <li className="nav-item" href="#">
+                <li className="nav-item">
                   <Link to="/user/login">
                     <i className="fa fa-sign-in-alt"></i>
                     <span>Login</span>
                   </Link>
                 </li>
-                <li className="nav-item" href="#">
+                <li className="nav-item">
                   <Link to="/user/register">
                     <i className="fas fa-user-plus"></i>
                     <span>Register</span>
@@ -54,19 +54,19 @@ export const Header = () => {
             )}
             {isLogged && (
               <>
-                <li className="nav-item" href="#">
+                <li className="nav-item">
                   <Link to="#">
                     <i className="fa fa-plus"></i>
                     <span>Create article</span>
                   </Link>
                 </li>
-                <li className="nav-item" href="#">
+                <li className="nav-item">
                   <Link to="#">
                     <i className="fas fa-newspaper"></i>
                     <span>My articles</span>
                   </Link>
                 </li>
-                <li className="nav-item" href="#">
+                <li className="nav-item">
                   <Link to="#">
                     <i className="fas fa-person-booth"></i>
                     <span>All articles</span>
@@ -86,7 +86,7 @@ export const Header = () => {
                     <i className="fas fa-user-shield"></i>Admin
                   </p>
                   <ul className="dropdown-menu">
-                    <Link to="#" className="dropdownItem">
+                    <Link to="/admin/user-management" className="dropdownItem">
                       User management
                     </Link>
                   </ul>
