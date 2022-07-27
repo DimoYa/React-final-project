@@ -12,6 +12,7 @@ import { EditProfile } from './components/authentication/profile/edit-profil/Edi
 import { ToastContainer } from 'react-toastify';
 import { Admin } from './components/admin/Admin';
 import { ArticleCreate } from './components/features/article/article-create/ArticleCreate';
+import { ArticleList } from './components/features/article/article-list/ArticleList';
 
 import './App.css';
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/user/profile/edit/:userId' element={<EditProfile />} />
         <Route path='/admin/user-management' element={<Admin />} />
         <Route path='/article/create' element={<ArticleCreate />} />
+        <Route path='/article/list' element={<ArticleList />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
 
