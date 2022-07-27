@@ -11,6 +11,8 @@ import { EditProfile } from './components/authentication/profile/edit-profil/Edi
 
 import { ToastContainer } from 'react-toastify';
 import { Admin } from './components/admin/Admin';
+import { ArticleCreate } from './components/features/article/article-create/ArticleCreate';
+
 import './App.css';
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route path='/user/profile/:userId' element={<Profile />} />
         <Route path='/user/profile/edit/:userId' element={<EditProfile />} />
         <Route path='/admin/user-management' element={<Admin />} />
+        <Route path='/article/create' element={<ArticleCreate />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
 

@@ -100,7 +100,7 @@ export const Landing = () => {
                   Create, view and manage articles
                 </p>
                 <div id="buttons">
-                  <Link to="#" className="btn btn-secondary">
+                  <Link to="/article/create" className="btn btn-secondary">
                     <i className="fas fa-user-plus p-1"></i>Create new article
                   </Link>
                   <Link to="#" className="btn btn-secondary">

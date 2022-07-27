@@ -56,7 +56,7 @@ export const Header = () => {
             {isLogged && (
               <>
                 <li className="nav-item">
-                  <Link to="#">
+                  <Link to="/article/create">
                     <i className="fa fa-plus"></i>
                     <span>Create article</span>
                   </Link>
