@@ -25,6 +25,11 @@ export const Admin = () => {
       .then(() => {
         toast.success('Successfully suspended user!');
       })
+      .then(() => {
+        adminService.getAllUsers().then((data) => {
+          setUsers(data);
+        });
+      })
       .catch((err) => {
         toast.error(err);
       });
@@ -36,13 +41,18 @@ export const Admin = () => {
       .then(() => {
         toast.success('Successfully restored user!');
       })
+      .then(() => {
+        adminService.getAllUsers().then((data) => {
+          setUsers(data);
+        });
+      })
       .catch((err) => {
         toast.error(err);
       });
   };
 
   return (
-    <div className="container admin">
+    <div className="container admin-container">
       <h3>Admin panel - User management</h3>
       <ul className="list-group">
         {users.map((user) => {
@@ -94,9 +104,9 @@ export const Admin = () => {
                 ) : null}
                 {user._kmd['status'] !== undefined ? (
                   <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={() => restoreUserHandler(user._id)}
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => restoreUserHandler(user._id)}
                   >
                     Restore user
                   </button>

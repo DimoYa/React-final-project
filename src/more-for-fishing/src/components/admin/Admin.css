@@ -1,5 +1,5 @@
-.container {
-    width: 60%;
+.admin-container {
+    width: 60% !important;
 }
 
 .list-group-item {

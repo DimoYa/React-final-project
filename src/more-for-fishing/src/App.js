@@ -9,9 +9,9 @@ import { NotFound } from './components/features/not-found/NotFound';
 import { Profile } from './components/authentication/profile/view-profile/Profile';
 import { EditProfile } from './components/authentication/profile/edit-profil/EditProfile';
 
-import './App.css';
 import { ToastContainer } from 'react-toastify';
 import { Admin } from './components/admin/Admin';
+import './App.css';
 
 function App() {
   return (
