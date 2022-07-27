@@ -68,7 +68,7 @@ export const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="#">
+                  <Link to="/article/list">
                     <i className="fas fa-person-booth"></i>
                     <span>All articles</span>
                   </Link>
