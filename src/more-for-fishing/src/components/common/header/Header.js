@@ -37,7 +37,7 @@ export const Header = () => {
                 <span>Home</span>
               </Link>
             </li>
-            {!isLogged && (
+            {!isLogged ?
               <>
                 <li className="nav-item">
                   <Link to="/user/login">
@@ -51,9 +51,7 @@ export const Header = () => {
                     <span>Register</span>
                   </Link>
                 </li>
-              </>
-            )}
-            {isLogged && (
+              </> :
               <>
                 <li className="nav-item">
                   <Link to="/article/create">
@@ -74,7 +72,7 @@ export const Header = () => {
                   </Link>
                 </li>
               </>
-            )}
+            }
 
             {isAdmin && (
               <>

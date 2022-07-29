@@ -3,7 +3,7 @@ import './ArticleItem.css'
 
 export const ArticleItem = ({ article }) => {
   return (
-    <div className="card flex-md-row mb-4 shadow-sm h-md-250" id='article-item'>
+    <div className="card flex-md-row mb-4 shadow-sm h-md-250 article-item">
       <div className="card-body d-flex flex-column align-items-start">
         <h4 className="d-inline-block mb-2">{article.headline}</h4>
         <div className="mb-1 text-muted small">
