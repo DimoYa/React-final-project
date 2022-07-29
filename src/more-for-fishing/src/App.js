@@ -5,6 +5,7 @@ import { Footer } from './components/common/footer/Footer';
 import { Landing } from './components/features/landing/Landing';
 import { Register } from './components/authentication/register/Register';
 import { Login } from './components/authentication/login/Login';
+import { Logout } from './components/authentication/logout/Logout';
 import { NotFound } from './components/features/not-found/NotFound';
 import { Profile } from './components/authentication/profile/view-profile/Profile';
 import { EditProfile } from './components/authentication/profile/edit-profil/EditProfile';
@@ -25,6 +26,7 @@ function App() {
         <Route path='/' element={<Landing />} />
         <Route path='/user/register' element={<Register />} />
         <Route path='/user/login' element={<Login />} />
+        <Route path='/user/logout' element={<Logout />} />
         <Route path='/user/profile/:userId' element={<Profile />} />
         <Route path='/user/profile/edit/:userId' element={<EditProfile />} />
         <Route path='/admin/user-management' element={<Admin />} />

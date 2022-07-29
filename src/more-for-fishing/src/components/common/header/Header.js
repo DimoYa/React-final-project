@@ -4,7 +4,6 @@ import defaultAvatarPath from '../../../assets/default-avatar-profile.png';
 import './Header.css';
 
 import * as authenticationService from '../../../services/authenticationService';
-import { toast } from 'react-toastify';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -13,18 +12,6 @@ export const Header = () => {
   const isAdmin = authenticationService.isAdmin();
   const userId = authenticationService.returnId();
   const avatar = authenticationService.returnUserPhoto();
-
-  const logoutHandler = () => {
-    authenticationService
-      .logout()
-      .then(() => {
-        toast.success('Successfully logout!');
-        navigate('/user/login');
-      })
-      .catch((err) => {
-        toast.err(err);
-      });
-  };
 
   return (
     <header>
@@ -110,10 +97,10 @@ export const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <p onClick={logoutHandler}>
+                  <Link to='user/logout'>
                     <i className="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
-                  </p>
+                  </Link>
                 </li>
               </ul>
             </>
