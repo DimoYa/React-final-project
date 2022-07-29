@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import * as articleService from '../../../../services/articleService';
+import * as authenticationService from '../../../../services/authenticationService';
 
 export const ArticleCreate = () => {
   const [errors, setErrors] = useState({});
@@ -13,6 +14,7 @@ export const ArticleCreate = () => {
   });
 
   const navigate = useNavigate();
+  const author = authenticationService.returnUserName();
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -23,6 +25,7 @@ export const ArticleCreate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    values.author = author;
 
     articleService
       .createArticle(values)
