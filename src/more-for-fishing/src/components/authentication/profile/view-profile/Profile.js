@@ -12,7 +12,7 @@ import { AuthContext } from '../../../../context/AuthContext';
 import { toast } from 'react-toastify';
 
 export const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, userLogout } = useContext(AuthContext);
   const userId = user.id;
   const isAdmin = user.isAdmin;
 
@@ -26,7 +26,7 @@ export const Profile = () => {
         setUser(data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
   }, []);
 
@@ -42,6 +42,8 @@ export const Profile = () => {
     userService
       .deleteUser(userId)
       .then(() => {
+        userLogout();
+        localStorage.clear();
         navigate('/');
         toast.success('Successfully deleted profile!');
       })

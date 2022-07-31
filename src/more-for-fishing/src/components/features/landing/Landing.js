@@ -108,7 +108,7 @@ export const Landing = () => {
                   <Link to="#" className="btn btn-secondary">
                     <i className="fas fa-user-plus p-1"></i>My articles
                   </Link>
-                  <Link to="#" className="btn btn-secondary">
+                  <Link to="/article/list" className="btn btn-secondary">
                     <i className="fas fa-user-plus p-1"></i>All articles
                   </Link>
                 </div>

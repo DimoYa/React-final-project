@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import defaultAvatarPath from '../../../assets/default-avatar-profile.png';
 
 import './Header.css';
@@ -8,7 +8,6 @@ import { AuthContext } from '../../../context/AuthContext';
 
 export const Header = () => {
 
-  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
   const isLogged = user.accessToken;

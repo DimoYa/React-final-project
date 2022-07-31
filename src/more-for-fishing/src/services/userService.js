@@ -1,56 +1,16 @@
 import { environment } from '../environments/environment';
+import * as request from './requster';
 
 const baseUrl = environment.apiUserUrl;
 
 export const getUser = async (profileId) => {
-  const response = await fetch(`${baseUrl}/${profileId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Kinvey ${localStorage.getItem('authtoken')}`,
-    },
-  });
-
-  const result = await response.json();
-
-  if (response.ok) {
-    return result;
-  } else {
-    throw result.description;
-  }
+  return await request.get(`${baseUrl}/${profileId}`);
 };
 
 export const updateUser = async (profileId, user) => {
-  const response = await fetch(`${baseUrl}/${profileId}`, {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Kinvey ${localStorage.getItem('authtoken')}`,
-    },
-    body: JSON.stringify(user),
-  });
-
-  const result = await response.json();
-
-  if (response.ok) {
-    return result;
-  } else {
-    throw result.description;
-  }
+  return await request.put(`${baseUrl}/${profileId}`, user);
 };
 
 export const deleteUser = async (profileId) => {
-  const response = await fetch(`${baseUrl}/${profileId}?hard=true`, {
-    method: 'DELETE',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Kinvey ${localStorage.getItem('authtoken')}`,
-    },
-  });
-
-  if (response.ok) {
-    localStorage.clear();
-  } else {
-    const result = await response.json();
-    throw result.description;
-  }
+  return await request.del(`${baseUrl}/${profileId}?hard=true`, {});
 };

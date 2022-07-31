@@ -7,7 +7,7 @@ const request = async (method, url, data) => {
     const auth = JSON.parse(user || '{}');
 
     let headers = {};
-    if (url.endsWith('login') || url.endsWith(appKey)) {
+    if (url.endsWith('login') || (url.endsWith(appKey) && method === 'POST')) {
       headers['Authorization'] = `Basic ${Buffer.from(
         `${appKey}:${appSecret}`
       ).toString('base64')}`;
@@ -41,12 +41,16 @@ const request = async (method, url, data) => {
       return;
     }
 
-    const result = await response.json();
     if (response.ok) {
-      return result;
+      if (response.status === 204) {
+        return;
+      }
+      return await response.json();
     } else {
+      const result = await response.json();
       throw result.description;
     }
+    
   } catch (error) {
     throw error;
   }
