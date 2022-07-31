@@ -2,7 +2,7 @@ import { Loading } from '../../../shared/Loading';
 import * as userService from '../../../../services/userService';
 
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const codes = [
@@ -164,7 +164,7 @@ export const EditProfile = () => {
                 />
               </p>
               <div className="buttons">
-                <button className="btn btn-warning">Cancel </button>
+                <Link to={`/user/profile/${userId}`} style={{verticalAlign: 'bottom'}} className="btn btn-warning">Cancel</Link>
                 &nbsp;
                 <button
                   type="submit"

@@ -76,14 +76,15 @@ export const Profile = () => {
               <p>Full Name: </p>
               <p>{userProfile.fullname}</p>
             </div>
-            <div className="flex">
-              <p>Phone: </p>
-              {userProfile.phoneNumber && (
+            {userProfile.phoneNumber && (
+              <div className="flex">
+                <p>Phone: </p>
                 <p>
                   {userProfile.phoneCode} {userProfile.phoneNumber}
                 </p>
-              )}
-            </div>
+                )
+              </div>
+            )}
             <hr />
             <div id="buttons">
               <Link
