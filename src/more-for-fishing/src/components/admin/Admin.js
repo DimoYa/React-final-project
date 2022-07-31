@@ -4,15 +4,20 @@ import * as adminService from '../../services/adminService';
 import { toast } from 'react-toastify';
 
 import './Admin.css';
+import { Loading } from '../shared/Loading';
 
 export const Admin = () => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     adminService
       .getAllUsers()
       .then((data) => {
         setUsers(data);
+      })
+      .then((data) => {
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err);
@@ -55,67 +60,71 @@ export const Admin = () => {
     <div className="container admin-container">
       <h3>Admin panel - User management</h3>
       <ul className="list-group">
-        {users.map((user) => {
-          return (
-            <li className="list-group-item" key={user._id}>
-              <h5>{user.username}</h5>
-              {user._kmd['status'] !== undefined ? (
-                <p>
-                  {' '}
-                  <i className="fas fa-ban" />
-                  Suspended
-                </p>
-              ) : null}
-              {user._kmd['roles'] !== undefined &&
-              user._kmd['roles'].length !== 0 ? (
-                <p>
-                  {' '}
-                  <i className="fas fa-user-shield" />
-                  Admin
-                </p>
-              ) : null}
-              <div id="buttons">
-                {user._kmd['status'] === undefined ? (
-                  <>
-                    <Link
-                      to={`/user/profile/${user._id}`}
-                      className="btn btn-info"
-                    >
-                      Profile details
-                    </Link>
-                    &nbsp;
-                    <Link
-                      className="btn btn-success"
-                      to={`/user/profile/edit/${user._id}`}
-                    >
-                      Update profile
-                    </Link>
-                    &nbsp;
-                    {user._kmd['roles'] === undefined ? (
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => suspendUserHandler(user._id)}
-                      >
-                        Suspend profile
-                      </button>
-                    ) : null}
-                  </>
-                ) : null}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          users.map((user) => {
+            return (
+              <li className="list-group-item" key={user._id}>
+                <h5>{user.username}</h5>
                 {user._kmd['status'] !== undefined ? (
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    onClick={() => restoreUserHandler(user._id)}
-                  >
-                    Restore user
-                  </button>
+                  <p>
+                    {' '}
+                    <i className="fas fa-ban" />
+                    Suspended
+                  </p>
                 ) : null}
-              </div>
-              <hr />
-            </li>
-          );
-        })}
+                {user._kmd['roles'] !== undefined &&
+                user._kmd['roles'].length !== 0 ? (
+                  <p>
+                    {' '}
+                    <i className="fas fa-user-shield" />
+                    Admin
+                  </p>
+                ) : null}
+                <div id="buttons">
+                  {user._kmd['status'] === undefined ? (
+                    <>
+                      <Link
+                        to={`/user/profile/${user._id}`}
+                        className="btn btn-info"
+                      >
+                        Profile details
+                      </Link>
+                      &nbsp;
+                      <Link
+                        className="btn btn-success"
+                        to={`/user/profile/edit/${user._id}`}
+                      >
+                        Update profile
+                      </Link>
+                      &nbsp;
+                      {user._kmd['roles'] === undefined ? (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => suspendUserHandler(user._id)}
+                        >
+                          Suspend profile
+                        </button>
+                      ) : null}
+                    </>
+                  ) : null}
+                  {user._kmd['status'] !== undefined ? (
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={() => restoreUserHandler(user._id)}
+                    >
+                      Restore user
+                    </button>
+                  ) : null}
+                </div>
+                <hr />
+              </li>
+            );
+          })
+        )}
       </ul>
     </div>
   );
