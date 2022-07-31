@@ -14,29 +14,42 @@ import { ToastContainer } from 'react-toastify';
 import { Admin } from './components/admin/Admin';
 import { ArticleCreate } from './components/features/article/article-create/ArticleCreate';
 import { ArticleList } from './components/features/article/article-list/ArticleList';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { AuthContext } from './context/AuthContext';
 
 import './App.css';
 
 function App() {
+  const [auth, setAuth] = useLocalStorage('auth', {});
+
+  const userLogin = (authData) => {
+    setAuth(authData);
+  };
+
+  const userLogout = () => {
+    setAuth({});
+  };
+
   return (
     <div>
-      <Header />
+      <AuthContext.Provider value={{ user: auth, userLogin, userLogout }}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/user/register" element={<Register />} />
+          <Route path="/user/login" element={<Login />} />
+          <Route path="/user/logout" element={<Logout />} />
+          <Route path="/user/profile/:userId" element={<Profile />} />
+          <Route path="/user/profile/edit/:userId" element={<EditProfile />} />
+          <Route path="/admin/user-management" element={<Admin />} />
+          <Route path="/article/create" element={<ArticleCreate />} />
+          <Route path="/article/list" element={<ArticleList />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
-      <Routes>
-        <Route path='/' element={<Landing />} />
-        <Route path='/user/register' element={<Register />} />
-        <Route path='/user/login' element={<Login />} />
-        <Route path='/user/logout' element={<Logout />} />
-        <Route path='/user/profile/:userId' element={<Profile />} />
-        <Route path='/user/profile/edit/:userId' element={<EditProfile />} />
-        <Route path='/admin/user-management' element={<Admin />} />
-        <Route path='/article/create' element={<ArticleCreate />} />
-        <Route path='/article/list' element={<ArticleList />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-
-      <ToastContainer />
-      <Footer />
+        <ToastContainer />
+        <Footer />
+      </AuthContext.Provider>
     </div>
   );
 }

@@ -3,15 +3,18 @@ import defaultAvatarPath from '../../../assets/default-avatar-profile.png';
 
 import './Header.css';
 
-import * as authenticationService from '../../../services/authenticationService';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
 
 export const Header = () => {
-  const navigate = useNavigate();
 
-  const isLogged = authenticationService.isLoggedIn();
-  const isAdmin = authenticationService.isAdmin();
-  const userId = authenticationService.returnId();
-  const avatar = authenticationService.returnUserPhoto();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
+  const isLogged = user.accessToken;
+  const isAdmin = user.isAdmin;
+  const userId = user.id;
+  const avatar = user.photo;
 
   return (
     <header>

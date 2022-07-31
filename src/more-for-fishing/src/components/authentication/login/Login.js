@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import * as authenticationService from '../../../services/authenticationService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../../context/AuthContext';
 
 export const Login = () => {
   const [errors, setErrors] = useState({});
@@ -13,6 +14,7 @@ export const Login = () => {
     password: '',
   });
 
+  const { userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const changeHandler = (e) => {
@@ -27,7 +29,19 @@ export const Login = () => {
 
     authenticationService
       .login(values)
-      .then(() => {
+      .then((authData) => {
+        const sessionData = {
+          accessToken: authData['_kmd']['authtoken'],
+          username: authData['username'],
+          id: authData['_id'],
+          photo: authData['photo'],
+          isAdmin:
+            authData['_kmd']['roles'] !== undefined &&
+            authData['_kmd']['roles'].length !== 0
+              ? true
+              : false,
+        };
+        userLogin(sessionData);
         toast.success('Successfully Login!');
         navigate('/');
       })

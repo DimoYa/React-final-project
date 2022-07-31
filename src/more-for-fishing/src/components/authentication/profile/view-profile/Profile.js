@@ -1,21 +1,22 @@
 import './Profile.css';
 
-import * as authenticationService from '../../../../services/authenticationService';
 import * as userService from '../../../../services/userService';
 
 import defaultAvatarPath from '../../../../assets/default-avatar-profile.png';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Loading } from '../../../shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
+import { AuthContext } from '../../../../context/AuthContext';
 import { toast } from 'react-toastify';
 
 export const Profile = () => {
-  const userId = authenticationService.returnId();
-  const isAdmin = authenticationService.isAdmin();
+  const { user } = useContext(AuthContext);
+  const userId = user.id;
+  const isAdmin = user.isAdmin;
 
-  const [user, setUser] = useState({});
+  const [userProfile, setUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,32 +53,32 @@ export const Profile = () => {
   return (
     <div className="profile">
       <div className="container">
-        {Object.keys(user).length === 0 ? (
+        {Object.keys(userProfile).length === 0 ? (
           <Loading />
         ) : (
           <>
             <img
               src={
-                user.photo === 'null' || user.photo === ''
+                userProfile.photo === 'null' || userProfile.photo === ''
                   ? defaultAvatarPath
-                  : user.photo
+                  : userProfile.photo
               }
               alt="default user"
             />
             <h3>User Info:</h3>
             <div className="flex">
               <p>Username: </p>
-              <p>{user.username}</p>
+              <p>{userProfile.username}</p>
             </div>
             <div className="flex">
               <p>Full Name: </p>
-              <p>{user.fullname}</p>
+              <p>{userProfile.fullname}</p>
             </div>
             <div className="flex">
               <p>Phone: </p>
-              {user.phoneNumber && (
+              {userProfile.phoneNumber && (
                 <p>
-                  {user.phoneCode} {user.phoneNumber}
+                  {userProfile.phoneCode} {userProfile.phoneNumber}
                 </p>
               )}
             </div>

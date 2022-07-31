@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../../../context/AuthContext';
 
 import * as articleService from '../../../../services/articleService';
-import * as authenticationService from '../../../../services/authenticationService';
 
 export const ArticleCreate = () => {
   const [errors, setErrors] = useState({});
@@ -12,9 +12,10 @@ export const ArticleCreate = () => {
     content: '',
     image: '',
   });
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  const author = authenticationService.returnUserName();
+  const author = user.username;
 
   const changeHandler = (e) => {
     setValues((state) => ({

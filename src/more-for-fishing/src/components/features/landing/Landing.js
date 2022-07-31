@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 
 import './Landing.css';
 
-import * as authenticationService from '../../../services/authenticationService';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
 
 export const Landing = () => {
-  const isLogged = authenticationService.isLoggedIn();
-  const isAdmin = authenticationService.isAdmin();
-  const userId = authenticationService.returnId();
+  const { user } = useContext(AuthContext);
+  const isLogged = user.accessToken;
+  const isAdmin = user.isAdmin;
+  const userId = user.id;
 
   return (
     <div className="landing-container">
