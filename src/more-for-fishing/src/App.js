@@ -14,25 +14,14 @@ import { ToastContainer } from 'react-toastify';
 import { Admin } from './components/admin/Admin';
 import { ArticleCreate } from './components/features/article/article-create/ArticleCreate';
 import { ArticleList } from './components/features/article/article-list/ArticleList';
-import { useLocalStorage } from './hooks/useLocalStorage';
-import { AuthContext } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 
 import './App.css';
 
 function App() {
-  const [auth, setAuth] = useLocalStorage('auth', {});
-
-  const userLogin = (authData) => {
-    setAuth(authData);
-  };
-
-  const userLogout = () => {
-    setAuth({});
-  };
-
   return (
     <div>
-      <AuthContext.Provider value={{ user: auth, userLogin, userLogout }}>
+      <AuthProvider>
         <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -49,7 +38,7 @@ function App() {
 
         <ToastContainer />
         <Footer />
-      </AuthContext.Provider>
+      </AuthProvider>
     </div>
   );
 }
