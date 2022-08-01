@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 import { Header } from './components/common/header/Header';
 import { Footer } from './components/common/footer/Footer';
@@ -11,15 +12,17 @@ import { Profile } from './components/authentication/profile/view-profile/Profil
 import { EditProfile } from './components/authentication/profile/edit-profile/EditProfile';
 
 import { ToastContainer } from 'react-toastify';
-import { Admin } from './components/admin/Admin';
 import { ArticleCreate } from './components/features/article/article-create/ArticleCreate';
 import { ArticleList } from './components/features/article/article-list/ArticleList';
 import { AuthProvider } from './context/AuthContext';
-
-import './App.css';
 import { AuthenticatedGuard } from './components/common/guards/AuthenticatedGuard';
 import { AdminGuard } from './components/common/guards/AdminGuard';
 import { UnAuthenticatedGuard } from './components/common/guards/UnAuthenticatedGuard';
+import { Loading } from './components/shared/Loading';
+
+import './App.css';
+
+const Admin = lazy(() => import('./components/admin/Admin'));
 
 function App() {
   return (
@@ -42,7 +45,14 @@ function App() {
             <Route path="/article/create" element={<ArticleCreate />} />
             <Route path="/article/list" element={<ArticleList />} />
             <Route element={<AdminGuard />}>
-              <Route path="/admin/user-management" element={<Admin />} />
+              <Route
+                path="/admin/user-management"
+                element={
+                  <Suspense fallback={<Loading/>}>
+                    <Admin />
+                  </Suspense>
+                }
+              />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

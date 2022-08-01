@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import './Admin.css';
 import { Loading } from '../shared/Loading';
 
-export const Admin = () => {
+const Admin = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -129,3 +129,5 @@ export const Admin = () => {
     </div>
   );
 };
+
+export default Admin;
