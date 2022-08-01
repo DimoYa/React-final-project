@@ -17,6 +17,9 @@ import { ArticleList } from './components/features/article/article-list/ArticleL
 import { AuthProvider } from './context/AuthContext';
 
 import './App.css';
+import { AuthenticatedGuard } from './components/common/guards/AuthenticatedGuard';
+import { AdminGuard } from './components/common/guards/AdminGuard';
+import { UnAuthenticatedGuard } from './components/common/guards/UnAuthenticatedGuard';
 
 function App() {
   return (
@@ -25,14 +28,23 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/user/register" element={<Register />} />
-          <Route path="/user/login" element={<Login />} />
-          <Route path="/user/logout" element={<Logout />} />
-          <Route path="/user/profile/:userId" element={<Profile />} />
-          <Route path="/user/profile/edit/:userId" element={<EditProfile />} />
-          <Route path="/admin/user-management" element={<Admin />} />
-          <Route path="/article/create" element={<ArticleCreate />} />
-          <Route path="/article/list" element={<ArticleList />} />
+          <Route element={<UnAuthenticatedGuard />}>
+            <Route path="/user/register" element={<Register />} />
+            <Route path="/user/login" element={<Login />} />
+          </Route>
+          <Route element={<AuthenticatedGuard />}>
+            <Route path="/user/logout" element={<Logout />} />
+            <Route path="/user/profile/:userId" element={<Profile />} />
+            <Route
+              path="/user/profile/edit/:userId"
+              element={<EditProfile />}
+            />
+            <Route path="/article/create" element={<ArticleCreate />} />
+            <Route path="/article/list" element={<ArticleList />} />
+            <Route element={<AdminGuard />}>
+              <Route path="/admin/user-management" element={<Admin />} />
+            </Route>
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
 
