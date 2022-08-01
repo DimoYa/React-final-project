@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import * as authenticationService from '../../../services/authenticationService';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../../context/AuthContext';
 
 const codes = [
   { value: '+359', label: '+359' },
@@ -26,6 +27,7 @@ export const Register = () => {
   });
 
   const navigate = useNavigate();
+  const { userLogin } = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -43,7 +45,22 @@ export const Register = () => {
       .register(userData)
       .then(() => {
         toast.success('Successfully Registered!');
-        navigate('/user/login');
+      }).then(() => {
+        authenticationService.login({ username, password }).then((authData) => {
+          const sessionData = {
+            accessToken: authData['_kmd']['authtoken'],
+            username: authData['username'],
+            id: authData['_id'],
+            photo: authData['photo'],
+            isAdmin:
+              authData['_kmd']['roles'] !== undefined &&
+              authData['_kmd']['roles'].length !== 0
+                ? true
+                : false,
+          };
+          userLogin(sessionData)
+          navigate('/');
+        })
       })
       .catch((err) => {
         toast.error(err);
