@@ -9,7 +9,7 @@ export const ArticleItem = ({ article }) => {
       <div className="card-body d-flex flex-column align-items-start">
         <h4 className="d-inline-block mb-2">{article.headline}</h4>
         <div className="mb-1 text-muted small">
-          {article._kmd['ect'] == article._kmd['lmt']
+          {article._kmd['ect'] === article._kmd['lmt']
             ? <>
               <b>Created by:</b>
               <span className="fa fa-pencil p-1"> {article.author}</span>
@@ -19,7 +19,7 @@ export const ArticleItem = ({ article }) => {
             </>}
         </div>
         <div className="mb-1 text-muted small">
-          {article._kmd['ect'] == article._kmd['lmt']
+          {article._kmd['ect'] === article._kmd['lmt']
             ? <>
               <b>Published:</b>
               <span className="fas fa-calendar p-1"> {Moment(article._kmd['ect']).format('d MMM yyyy')}</span>

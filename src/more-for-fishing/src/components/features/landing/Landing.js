@@ -69,11 +69,11 @@ export const Landing = () => {
                       Manage users and articles
                     </p>
                     <div id="buttons">
-                      <Link to="#" className="btn btn-secondary">
+                      <Link to="/admin/user-management" className="btn btn-secondary">
                         <i className="fas fa-user-plus p-1"></i>View and manage
                         users
                       </Link>
-                      <Link to="#" className="btn btn-secondary">
+                      <Link to="/article/list" className="btn btn-secondary">
                         <i className="fas fa-user-plus p-1"></i>View and manage
                         articles
                       </Link>
