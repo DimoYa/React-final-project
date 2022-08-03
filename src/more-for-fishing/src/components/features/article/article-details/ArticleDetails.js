@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as articleService from '../../../../services/articleService';
 import { Loading } from '../../../shared/Loading';
 import Moment from 'moment';
-import './ArticleDetails.css';
 import { AuthContext } from '../../../../context/AuthContext';
+import { submitHandler } from '../../../shared/confirm-box/Confirm';
+
+import './ArticleDetails.css';
 
 export const ArticleDetails = () => {
   Moment.locale('en');
@@ -24,9 +26,30 @@ export const ArticleDetails = () => {
 
   const [article, setArticle] = useState({});
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const canModify = (articleAuthor) => {
     return articleAuthor === user.username || user.isAdmin;
+  };
+
+  const deleteHandler = () => {
+    submitHandler(
+      confirmDeleteHandler,
+      'Confirm deletion',
+      `Are you sure that you want to delete ${article.headline}?`
+    );
+  };
+
+  const confirmDeleteHandler = () => {
+    articleService
+      .deleteArticle(articleId)
+      .then(() => {
+        navigate('/article/list');
+        toast.success('Successfully deleted article!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   return (
@@ -100,7 +123,7 @@ export const ArticleDetails = () => {
                   Edit article
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-danger">
+                <button type="button" className="btn btn-danger" onClick={deleteHandler}>
                   Delete article
                 </button>
               </div>

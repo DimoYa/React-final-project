@@ -15,3 +15,11 @@ export const getAllArticles = async () => {
 export const getArticleById = async (articleId) => {
   return await request.get(`${articleEndPoint}/${articleId}`);
 };
+
+export const editArticle = async (body, articleId) => {
+  return await request.put(`${articleEndPoint}/${articleId}`, body);
+};
+
+export const deleteArticle = async (articleId) => {
+  return await request.del(`${articleEndPoint}/${articleId}`, {});
+};
