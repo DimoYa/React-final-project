@@ -19,6 +19,7 @@ import { AuthenticatedGuard } from './components/common/guards/AuthenticatedGuar
 import { AdminGuard } from './components/common/guards/AdminGuard';
 import { UnAuthenticatedGuard } from './components/common/guards/UnAuthenticatedGuard';
 import { Loading } from './components/shared/Loading';
+import { ArticleDetails } from './components/features/article/article-details/ArticleDetails';
 
 import './App.css';
 
@@ -44,6 +45,7 @@ function App() {
             />
             <Route path="/article/create" element={<ArticleCreate />} />
             <Route path="/article/list" element={<ArticleList />} />
+            <Route path="/article/list/:articleId" element={<ArticleDetails />} />
             <Route element={<AdminGuard />}>
               <Route
                 path="/admin/user-management"

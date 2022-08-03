@@ -9,7 +9,9 @@ export const createArticle = async (articleData) => {
 };
 
 export const getAllArticles = async () => {
-  return await request.get(
-    `${articleEndPoint}?query={}&sort={"_kmd.ect": -1}`
-  );
+  return await request.get(`${articleEndPoint}?query={}&sort={"_kmd.ect": -1}`);
+};
+
+export const getArticleById = async (articleId) => {
+  return await request.get(`${articleEndPoint}/${articleId}`);
 };

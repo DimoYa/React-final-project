@@ -1,0 +1,20 @@
+.container.article > img,
+.container.article > .article-content,
+.container.article > .menu {
+    width: 80%;
+    margin: auto;
+    display: block;
+}
+
+.container article {
+    width: 60%;
+}
+
+.container article>.card.shadow-0 {
+    background-color: #f0f2f5;
+}
+
+.container article>.accordion-button {
+    background-color: #4ebced;
+    color: #fff;
+}

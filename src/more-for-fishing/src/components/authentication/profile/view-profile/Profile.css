@@ -3,7 +3,7 @@
     text-decoration: underline;
 }
 
-.container img {
+.profile >.container img {
     width: 7em;
     height: 7em;
     margin: auto;
