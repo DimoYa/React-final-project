@@ -22,6 +22,7 @@ import { Loading } from './components/shared/Loading';
 import { ArticleDetails } from './components/features/article/article-details/ArticleDetails';
 
 import './App.css';
+import { ArticleEdit } from './components/features/article/article-edit/ArticleEdit';
 
 const Admin = lazy(() => import('./components/admin/Admin'));
 
@@ -46,6 +47,7 @@ function App() {
             <Route path="/article/create" element={<ArticleCreate />} />
             <Route path="/article/list" element={<ArticleList />} />
             <Route path="/article/list/:articleId" element={<ArticleDetails />} />
+            <Route path="/article/list/:articleId/edit" element={<ArticleEdit />} />
             <Route element={<AdminGuard />}>
               <Route
                 path="/admin/user-management"

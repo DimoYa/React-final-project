@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as articleService from '../../../../services/articleService';
 import { Loading } from '../../../shared/Loading';
@@ -115,13 +115,13 @@ export const ArticleDetails = () => {
             </div>
             {canModify(article.author) && (
               <div id="buttons">
-                <button
+                <Link
                   type="button"
+                  to='edit'
                   className="btn btn-success"
-                  routerlink="/article/list/{{article._id}}/edit"
                 >
                   Edit article
-                </button>
+                </Link>
                 &nbsp;
                 <button type="button" className="btn btn-danger" onClick={deleteHandler}>
                   Delete article
