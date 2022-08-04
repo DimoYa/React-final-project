@@ -101,11 +101,9 @@ export const ArticleCreate = () => {
             <input
               type="text"
               name="image"
-              id="image"
               placeholder="Add image link"
               value={values.image}
               onChange={changeHandler}
-              onBlur={(e) => requiredField(e)}
             />
           </p>
           <button className="btn btn-primary btn-block" disabled={!isFormValid}>
