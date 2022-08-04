@@ -14,10 +14,19 @@ export const Header = () => {
   const isAdmin = user.isAdmin;
   const userId = user.id;
   const avatar = user.photo;
+  let isExpanded = false;
+
+  const toggle = () => {
+    isExpanded = !isExpanded;
+  }
 
   return (
     <header>
       <nav className="navbar navbar-dark bg-primary navbar-expand-md navbar-dark">
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+          aria-label="Toggle navigation" aria-expanded={isExpanded} onClick={toggle}>
+          <span className="navbar-toggler-icon"></span>
+        </button>
         <div className="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item" href="/">
