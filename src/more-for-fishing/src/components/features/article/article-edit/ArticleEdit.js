@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as articleService from '../../../../services/articleService';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../../context/AuthContext';
@@ -111,7 +111,7 @@ export const ArticleEdit = () => {
                   />
                 </p >
                 <div className="buttons">
-                  <button className="btn btn-warning btn-block">Cancel </button>
+                  <Link to={`/article/list/${articleId}`} className="btn btn-warning btn-block">Cancel </Link>
                   <button className="btn btn-primary btn-block" disabled={!isFormValid}> Update article</button >
                 </div >
               </fieldset >

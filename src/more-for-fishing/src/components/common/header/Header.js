@@ -49,7 +49,7 @@ export const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="#">
+                  <Link to="/article/my-articles">
                     <i className="fas fa-newspaper"></i>
                     <span>My articles</span>
                   </Link>

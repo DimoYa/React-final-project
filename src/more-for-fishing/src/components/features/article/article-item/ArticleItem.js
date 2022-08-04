@@ -32,7 +32,7 @@ export const ArticleItem = ({ article }) => {
             </>}
         </div>
         <p className="text-muted small text-justify">{article.content.length > 500 ? article.content.substring(0, 500) + "..." : article.content}</p>
-        <Link to={`${article._id}`} className="btn btn-outline-primary">Continue reading</Link>
+        <Link to={`/article/list/${article._id}`} className="btn btn-outline-primary">Continue reading</Link>
       </div>
       {article.image && <img
         className="card-img-right flex-auto d-none d-lg-block"

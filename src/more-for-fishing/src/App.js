@@ -23,6 +23,7 @@ import { ArticleDetails } from './components/features/article/article-details/Ar
 
 import './App.css';
 import { ArticleEdit } from './components/features/article/article-edit/ArticleEdit';
+import { ArticleUser } from './components/features/article/article-user/ArticleUser';
 
 const Admin = lazy(() => import('./components/admin/Admin'));
 
@@ -46,6 +47,7 @@ function App() {
             />
             <Route path="/article/create" element={<ArticleCreate />} />
             <Route path="/article/list" element={<ArticleList />} />
+            <Route path="/article/my-articles" element={<ArticleUser />} />
             <Route path="/article/list/:articleId" element={<ArticleDetails />} />
             <Route path="/article/list/:articleId/edit" element={<ArticleEdit />} />
             <Route element={<AdminGuard />}>

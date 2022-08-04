@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { environment } from '../environments/environment';
 import * as request from './requster';
 
@@ -10,6 +11,10 @@ export const createArticle = async (articleData) => {
 
 export const getAllArticles = async () => {
   return await request.get(`${articleEndPoint}?query={}&sort={"_kmd.ect": -1}`);
+};
+
+export const getUserArticles = async (user) => {
+  return await request.get(`${articleEndPoint}?query={"author":"${user}"}&sort={"_kmd.ect": -1}`);
 };
 
 export const getArticleById = async (articleId) => {
