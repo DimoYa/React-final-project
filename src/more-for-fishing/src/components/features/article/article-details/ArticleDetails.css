@@ -1,4 +1,4 @@
-.container.article > img,
+#image,
 .container.article > .article-content,
 .container.article > .menu {
     width: 80%;

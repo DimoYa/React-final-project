@@ -61,41 +61,35 @@ export const ArticleDetails = () => {
           <>
             <h4 className="panel-title">{article.headline}</h4>
             <div className="mb-2">
-              {article.image && <img alt="Thumbnail" src={article.image} />}
+              {article.image && <img alt="Thumbnail" id='image' src={article.image} />}
             </div>
             <div className="d-flex flex-column align-items-start menu">
               <div className="mb-1 text-muted small">
-                {article._kmd['ect'] === article._kmd['lmt'] ? (
-                  <>
-                    <b>Created by:</b>
-                    <span className="fa fa-pencil p-1"> {article.author}</span>
-                  </>
-                ) : (
-                  <>
-                    {' '}
+                <b>Created by:</b>
+                <span className="fa fa-pencil p-1"> {article.author}</span>
+              </div>
+
+              <div className="mb-1 text-muted small">
+                <b>Published:</b>
+                <span className="fas fa-calendar p-1">
+                  {' '}
+                  {Moment(article._kmd['ect']).format('d MMM yyyy')}
+                </span>
+              </div>
+            </div>
+
+            {article._kmd['ect'] !== article._kmd['lmt'] ? (
+              <>
+                <div className="d-flex flex-column align-items-start menu">
+                  <div className="mb-1 text-muted small">
                     <b>Modified by:</b>
                     <span className="fa fa-pencil p-1">
                       {' '}
                       {article.modified}
                     </span>
-                  </>
-                )}
-              </div>
-              <div className="mb-1 text-muted small">
-                {article._kmd['ect'] === article._kmd['lmt'] ? (
-                  <>
-                    <b>Published:</b>
-                    <span className="fas fa-calendar p-1">
-                      {' '}
-                      {Moment(article._kmd['ect']).format('d MMM yyyy')}
-                    </span>
-                    <span className="fa fa-clock-o p-1">
-                      {' '}
-                      {Moment(article._kmd['ect']).format('HH:mm')}
-                    </span>
-                  </>
-                ) : (
-                  <>
+                  </div>
+
+                  <div className="mb-1 text-muted small">
                     <b>Modified:</b>
                     <span className="fas fa-calendar p-1">
                       {' '}
@@ -105,25 +99,25 @@ export const ArticleDetails = () => {
                       {' '}
                       {Moment(article._kmd['lmt']).format('HH:mm')}
                     </span>
-                  </>
-                )}
-              </div>
-            </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
             <hr className="menu mb-1 mt-1" />
             <div className="article-content">
               <p className="text-justify">{article.content}</p>
             </div>
             {canModify(article.author) && (
               <div id="buttons">
-                <Link
-                  type="button"
-                  to='edit'
-                  className="btn btn-success"
-                >
+                <Link type="button" to="edit" className="btn btn-success">
                   Edit article
                 </Link>
                 &nbsp;
-                <button type="button" className="btn btn-danger" onClick={deleteHandler}>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={deleteHandler}
+                >
                   Delete article
                 </button>
               </div>

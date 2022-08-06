@@ -27,8 +27,6 @@ export const ArticleEdit = () => {
   });
   const { user } = useContext(AuthContext);
 
-  const author = user.username;
-
   const changeHandler = (e) => {
     setArticle((state) => ({
       ...state,
