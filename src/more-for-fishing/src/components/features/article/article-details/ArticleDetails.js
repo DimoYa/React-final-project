@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as articleService from '../../../../services/articleService';
-import * as commenService from '../../../../services/commentService';
+import * as commentService from '../../../../services/commentService';
 import { Loading } from '../../../shared/Loading';
 import Moment from 'moment';
 import { AuthContext } from '../../../../context/AuthContext';
@@ -10,6 +10,7 @@ import { submitHandler } from '../../../shared/confirm-box/Confirm';
 import { CreateComment } from '../../comment/comment-create/CommentCreate';
 
 import './ArticleDetails.css';
+import { CommentItem } from '../../comment/comment-item/CommentItem';
 
 export const ArticleDetails = () => {
   Moment.locale('en');
@@ -58,7 +59,7 @@ export const ArticleDetails = () => {
   };
 
   useEffect(() => {
-    commenService
+    commentService
       .getAllCommentsByArticle(articleId)
       .then((data) => {
         setComments(data);
