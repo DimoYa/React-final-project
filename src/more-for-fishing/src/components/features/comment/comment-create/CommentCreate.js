@@ -1,16 +1,12 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../../../context/AuthContext';
-import * as commentService from '../../../../services/commentService';
-import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 import './CommentCreate.css';
 
-export const CommentCreate = ({ articleId }) => {
+export const CommentCreate = ({ onCommentCreate }) => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     content: '',
   });
-  const { user } = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -19,23 +15,9 @@ export const CommentCreate = ({ articleId }) => {
     }));
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    values.articleId = articleId;
-    values.author = user.username;
-    values.authorPicture = user.photo;
-    values.likes = [];
-
-    commentService
-      .addComment(values)
-      .then(() => {
-        toast.success('Successfully Created comment!');
-        setValues({ content: '' })
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
+  const submiHandler = (e) => {
+    onCommentCreate(e, values);
+    setValues({ content: '' });
   };
 
   const requiredField = (e) => {
@@ -49,7 +31,7 @@ export const CommentCreate = ({ articleId }) => {
     values.content.length && !Object.values(errors).some((x) => x);
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={(e) => submiHandler(e)}>
       <h5 className="label">Add comment</h5>
 
       {/* content */}
@@ -60,7 +42,7 @@ export const CommentCreate = ({ articleId }) => {
           className="form-control"
           rows={3}
           placeholder="Type comment..."
-          name='content'
+          name="content"
           value={values.content}
           onChange={changeHandler}
           onBlur={(e) => requiredField(e)}
@@ -68,10 +50,14 @@ export const CommentCreate = ({ articleId }) => {
       </p>
 
       {errors.content && (
-            <p className="alert alert-danger">Field is required!!</p>
-          )}
+        <p className="alert alert-danger">Field is required!!</p>
+      )}
 
-      <button type="submit" className="btn btn-primary btn-sm" disabled={!isFormValid}>
+      <button
+        type="submit"
+        className="btn btn-primary btn-sm"
+        disabled={!isFormValid}
+      >
         Submit comment
       </button>
     </form>

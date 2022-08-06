@@ -38,6 +38,26 @@ export const ArticleDetails = () => {
     return articleAuthor === user.username || user.isAdmin;
   };
 
+  const createHandler = (e, values) => {
+    e.preventDefault();
+
+    console.log(values)
+
+    values.articleId = articleId;
+    values.author = user.username;
+    values.authorPicture = user.photo;
+    values.likes = [];
+
+    commentService
+      .addComment(values)
+      .then(() => {
+        toast.success('Successfully Created comment!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
+
   const deleteHandler = () => {
     submitHandler(
       confirmDeleteHandler,
@@ -158,7 +178,7 @@ export const ArticleDetails = () => {
         <div className="col-md-8 col-lg-6">
           <div className="shadow-0 border" id="comments">
             <div className="card-body p-4">
-              <CommentCreate articleId={articleId} />
+              <CommentCreate onCommentCreate={createHandler}/>
               {comments.length > 0 && (
                 <div className="accordion accordion-flush mt-5">
                   <button
