@@ -1,14 +1,14 @@
 import defaultAvatarPath from '../../../../assets/default-avatar-profile.png';
 import Moment from 'moment';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../../../context/AuthContext';
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
 import * as commentService from '../../../../services/commentService';
 import { toast } from 'react-toastify';
 import './CommentItem.css';
 
-export const CommentItem = ( {comment, articleId} ) => {
+export const CommentItem = ( {comment, articleId, onDeleteHandler} ) => {
     Moment.locale('en');
     const { user } = useContext(AuthContext);
 
@@ -18,8 +18,12 @@ export const CommentItem = ( {comment, articleId} ) => {
     comment.author !== user.username;
 
     const canDislike = comment.likes.includes(user.id);
+    const [isEditMode, setEditMode] = useState(false);
 
-    let editMode = false;
+
+    const changeEditMode = () => {
+      setEditMode(!isEditMode);
+    };
 
     const deleteComment = () => {
         submitHandler(
@@ -31,9 +35,8 @@ export const CommentItem = ( {comment, articleId} ) => {
 
     const confirmDeleteHandler = () => {
         commentService
-          .deleteAllCommentsByArticle(articleId)
+          .deleteComment(comment._id)
           .then(() => {
-            // todo: reload
             toast.success('Successfully deleted comment!');
           })
           .catch((err) => {
@@ -41,7 +44,7 @@ export const CommentItem = ( {comment, articleId} ) => {
           });
       };
 
-    const editComment = (commentId) => {
+    const editComment = () => {
         const body = comment;
         body.author = user.username;
         body.authorPicture = user.photo;
@@ -53,14 +56,14 @@ export const CommentItem = ( {comment, articleId} ) => {
         .then(() => {
             // todo: reload
             toast.success('Successfully updated comment!');
-            editMode = false;
+            setEditMode(false);
         })
         .catch((err) => {
           toast.error(err);
         });
       }
 
-      const likeComment = (commentId) => {
+      const likeComment = () => {
         const body = comment;
         body.likes.push(user.id);
 
@@ -75,7 +78,7 @@ export const CommentItem = ( {comment, articleId} ) => {
         });
       }
 
-      const dislikeComment = (commentId) => {
+      const dislikeComment = () => {
         const body = comment;
         const index = body.likes.indexOf(user.id);
         body.likes.splice(index, 1);
@@ -93,7 +96,7 @@ export const CommentItem = ( {comment, articleId} ) => {
       
   return (
     <div>
-       {editMode && ( <div className="card mb-4">
+       {!isEditMode && ( <div className="card mb-4">
           <div className="card-body">
             <p>{comment.content}</p>
             <div className="d-flex justify-content-between">
@@ -111,16 +114,16 @@ export const CommentItem = ( {comment, articleId} ) => {
                 </p>
               </div>
               <div className="d-flex flex-row align-items-center">
-                {canModify && (<i className="fas fa-edit mx-2 fa-xs text-black" onClick={editMode = true} title="edit comment" />)}
-                {canModify && (<i className="far fa-trash-alt mx-2 fa-xs text-black" onClick={deleteComment(comment._id)} title="delete comment" />)}
-                {canLike && (<i className="fa fa-thumbs-o-up mx-2 fa-xs text-black" onClick={likeComment(comment._id)} title="like comment" />)}
-                {canDislike && (<i className="fa fa-thumbs-o-down mx-2 fa-xs text-black" onClick={dislikeComment(comment._id)} title="dislike comment" />)}
+                {canModify && (<i className="fas fa-edit mx-2 fa-xs text-black" onClick={changeEditMode} title="edit comment"></i>)}
+                {canModify && (<i className="far fa-trash-alt mx-2 fa-xs text-black" onClick={deleteComment} title="delete comment" ></i>)}
+                {canLike && (<i className="fa fa-thumbs-o-up mx-2 fa-xs text-black" onClick={likeComment} title="like comment" ></i>)}
+                {canDislike && (<i className="fa fa-thumbs-o-down mx-2 fa-xs text-black" onClick={dislikeComment} title="dislike comment" ></i>)}
               </div>
             </div>
             <p className="small mb-0 pt-2 text-muted small"><b>Likes:</b> {comment.likes.length}</p>
           </div>
         </div>)}
-       {editMode && ( 
+       {isEditMode && ( 
        <form className="mb-3" onSubmit={editComment(comment._id, comment.articleId)}>
           {/* content */}
           <p className="form-outline mb-4">
@@ -129,7 +132,7 @@ export const CommentItem = ( {comment, articleId} ) => {
         
           <button type="submit" className="btn btn-primary btn-sm mr-1"> Edit comment
           </button>
-          <button className="btn btn-warning btn-sm" onClick={editMode = false}>Cancel </button>
+          <button className="btn btn-warning btn-sm" onClick={changeEditMode}>Cancel </button>
         </form>)}
       </div>
   );

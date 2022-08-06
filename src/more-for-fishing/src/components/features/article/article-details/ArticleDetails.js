@@ -178,6 +178,7 @@ export const ArticleDetails = () => {
       </div>
 
       <div className="row d-flex justify-content-center">
+        
         <div className="col-md-8 col-lg-6">
           <div className="shadow-0 border" id="comments">
             <div className="card-body p-4">

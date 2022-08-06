@@ -15,15 +15,15 @@ export const addComment = async (commentData) => {
 };
 
 export const getCommentById = async (commentId) => {
-  return await request.get(`${this.commentEndPoint}/${commentId}`);
+  return await request.get(`${commentEndPoint}/${commentId}`);
 };
 
 export const editComment = async (commentId, commentData) => {
-  return await request.put(`${this.commentEndPoint}/${commentId}`, commentData);
+  return await request.put(`${commentEndPoint}/${commentId}`, commentData);
 };
 
 export const deleteComment = async (commentId) => {
-  return await request.del(`${this.commentEndPoint}/${commentId}`, {});
+  return await request.del(`${commentEndPoint}/${commentId}`, {});
 };
 
 export const deleteAllCommentsByArticle = async (articleId) => {
