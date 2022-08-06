@@ -41,8 +41,6 @@ export const ArticleDetails = () => {
   const createHandler = (e, values) => {
     e.preventDefault();
 
-    console.log(values)
-
     values.articleId = articleId;
     values.author = user.username;
     values.authorPicture = user.photo;
@@ -52,6 +50,11 @@ export const ArticleDetails = () => {
       .addComment(values)
       .then(() => {
         toast.success('Successfully Created comment!');
+      })
+      .then(() => {
+        commentService.getAllCommentsByArticle(articleId).then((data) => {
+          setComments(data);
+        });
       })
       .catch((err) => {
         toast.error(err);
@@ -178,7 +181,7 @@ export const ArticleDetails = () => {
         <div className="col-md-8 col-lg-6">
           <div className="shadow-0 border" id="comments">
             <div className="card-body p-4">
-              <CommentCreate onCommentCreate={createHandler}/>
+              <CommentCreate onCommentCreate={createHandler} />
               {comments.length > 0 && (
                 <div className="accordion accordion-flush mt-5">
                   <button
