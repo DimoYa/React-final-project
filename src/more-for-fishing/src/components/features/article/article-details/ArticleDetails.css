@@ -6,15 +6,15 @@
     display: block;
 }
 
-.container article {
+.container.article {
     width: 60%;
 }
 
-.container article>.card.shadow-0 {
+#comments {
     background-color: #f0f2f5;
 }
 
-.container article>.accordion-button {
-    background-color: #4ebced;
-    color: #fff;
+.accordion-button {
+    background-color: #4ebced !important;
+    color: #fff !important;
 }

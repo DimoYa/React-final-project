@@ -14,7 +14,6 @@ import { CommentItem } from '../../comment/comment-item/CommentItem';
 
 export const ArticleDetails = () => {
   Moment.locale('en');
-  let isExpanded = false;
   const { articleId } = useParams();
 
   useEffect(() => {
@@ -31,6 +30,7 @@ export const ArticleDetails = () => {
   const [article, setArticle] = useState({});
   const [comments, setComments] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [isExpanded, setExpanding] = useState(false);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -73,12 +73,12 @@ export const ArticleDetails = () => {
   }, []);
 
   const toggle = () => {
-    isExpanded = !isExpanded;
+    setExpanding(!isExpanded);
   };
 
   return (
     <>
-      <div className="container article">
+      <div className="container article" id="article">
         <>
           {Object.keys(article).length === 0 ? (
             <Loading />
@@ -153,25 +153,28 @@ export const ArticleDetails = () => {
           )}
         </>
       </div>
+
       <div className="row d-flex justify-content-center">
         <div className="col-md-8 col-lg-6">
-          <div className="card shadow-0 border">
+          <div className="shadow-0 border" id="comments">
             <div className="card-body p-4">
-              <CommentCreate />
-              {comments && (
-                <div className="mt-5">
+              <CommentCreate articleId={articleId} />
+              {comments.length > 0 && (
+                <div className="accordion accordion-flush mt-5">
                   <button
-                    className="accordion-button"
+                    className="accordion-button collapsed"
                     aria-expanded={isExpanded}
-                    onClick={toggle}
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapse"
                     aria-controls="collapseExample"
+                    onClick={toggle}
                   >
-                    <span>
-                      {isExpanded ? 'Hide comments' : 'Show comments'}
-                    </span>
+                    {isExpanded ? (
+                      <span>Hide comments</span>
+                    ) : (
+                      <span>Show comments</span>
+                    )}
                   </button>
                   <div className="collapse" id="collapse">
                     <div className="card card-body">
@@ -179,7 +182,11 @@ export const ArticleDetails = () => {
                         <Loading />
                       ) : comments.length !== 0 ? (
                         comments.map((x) => (
-                          <CommentItem key={x._id} comment={x} articleId={articleId} />
+                          <CommentItem
+                            key={x._id}
+                            comment={x}
+                            articleId={articleId}
+                          />
                         ))
                       ) : null}
                     </div>
