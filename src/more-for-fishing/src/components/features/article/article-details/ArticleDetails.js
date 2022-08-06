@@ -7,7 +7,7 @@ import { Loading } from '../../../shared/Loading';
 import Moment from 'moment';
 import { AuthContext } from '../../../../context/AuthContext';
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
-import { CreateComment } from '../../comment/comment-create/CommentCreate';
+import { CommentCreate } from '../../comment/comment-create/CommentCreate';
 
 import './ArticleDetails.css';
 import { CommentItem } from '../../comment/comment-item/CommentItem';
@@ -157,7 +157,7 @@ export const ArticleDetails = () => {
         <div className="col-md-8 col-lg-6">
           <div className="card shadow-0 border">
             <div className="card-body p-4">
-              <CreateComment />
+              <CommentCreate />
               {comments && (
                 <div className="mt-5">
                   <button
@@ -179,7 +179,7 @@ export const ArticleDetails = () => {
                         <Loading />
                       ) : comments.length !== 0 ? (
                         comments.map((x) => (
-                          <CommentItem key={x._id} comment={x} />
+                          <CommentItem key={x._id} comment={x} articleId={articleId} />
                         ))
                       ) : null}
                     </div>

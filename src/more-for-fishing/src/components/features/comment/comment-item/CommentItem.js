@@ -1,10 +1,11 @@
 import defaultAvatarPath from '../../../../assets/default-avatar-profile.png';
 import Moment from 'moment';
 
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../../../context/AuthContext';
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
 import * as commentService from '../../../../services/commentService';
+import { toast } from 'react-toastify';
 import './CommentItem.css';
 
 export const CommentItem = ( {comment, articleId} ) => {
@@ -40,7 +41,7 @@ export const CommentItem = ( {comment, articleId} ) => {
           });
       };
 
-    const editComment = (commentId, articleId) => {
+    const editComment = (commentId) => {
         const body = comment;
         body.author = user.username;
         body.authorPicture = user.photo;
@@ -110,29 +111,26 @@ export const CommentItem = ( {comment, articleId} ) => {
                 </p>
               </div>
               <div className="d-flex flex-row align-items-center">
-                <i *ngif="canModify" className="fas fa-edit mx-2 fa-xs text-black" (click)="editMode = true" title="edit comment" />
-                <i *ngif="canModify" className="far fa-trash-alt mx-2 fa-xs text-black" (click)="deleteComment(comment._id)" title="delete comment" />
-                <i *ngif="canLike" className="fa fa-thumbs-o-up mx-2 fa-xs text-black" (click)="likeComment(comment._id)" title="like comment" />
-                <i *ngif="canDislike" className="fa fa-thumbs-o-down mx-2 fa-xs text-black" (click)="dislikeComment(comment._id)" title="dislike comment" />
+                {canModify && (<i className="fas fa-edit mx-2 fa-xs text-black" onClick={editMode = true} title="edit comment" />)}
+                {canModify && (<i className="far fa-trash-alt mx-2 fa-xs text-black" onClick={deleteComment(comment._id)} title="delete comment" />)}
+                {canLike && (<i className="fa fa-thumbs-o-up mx-2 fa-xs text-black" onClick={likeComment(comment._id)} title="like comment" />)}
+                {canDislike && (<i className="fa fa-thumbs-o-down mx-2 fa-xs text-black" onClick={dislikeComment(comment._id)} title="dislike comment" />)}
               </div>
             </div>
             <p className="small mb-0 pt-2 text-muted small"><b>Likes:</b> {comment.likes.length}</p>
           </div>
         </div>)}
-        <form *ngif="editMode" className="mb-3" [formgroup]="editCommentForm" (submit)="editComment(comment._id, comment.articleId)">
+       {editMode && ( 
+       <form className="mb-3" onSubmit={editComment(comment._id, comment.articleId)}>
           {/* content */}
           <p className="form-outline mb-4">
-            <textarea type="text" className="form-control" rows={3} formcontrolname="content" [ngmodel]="comment.content" defaultValue={""} />
+            <textarea type="text" className="form-control" rows={3} formcontrolname="content"  defaultValue={comment.content} />
           </p>
-          <ng-container *ngif="f['content'].touched && f['content'].invalid">
-            <p *ngif="f['content'].errors['required']" className="alert alert-danger">
-              Content is required!
-            </p>
-          </ng-container>
-          <button type="submit" className="btn btn-primary btn-sm mr-1" [disabled]="editCommentForm.invalid"> Edit comment
+        
+          <button type="submit" className="btn btn-primary btn-sm mr-1"> Edit comment
           </button>
-          <button className="btn btn-warning btn-sm" (click)="editMode = false">Cancel </button>
-        </form>
+          <button className="btn btn-warning btn-sm" onClick={editMode = false}>Cancel </button>
+        </form>)}
       </div>
   );
 };
