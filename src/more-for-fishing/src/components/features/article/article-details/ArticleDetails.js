@@ -76,8 +76,8 @@ export const ArticleDetails = () => {
       });
   };
 
-  const commentDeleteHandler = (commentId) => {
-    setCommentId(commentId);
+  const commentDeleteHandler = (commentIdParam) => {
+    setCommentId(commentIdParam);
     submitHandler(
       commentConfirmDeleteHandler,
       'Confirm deletion',
@@ -271,7 +271,6 @@ export const ArticleDetails = () => {
                           <CommentItem
                             key={x._id}
                             comment={x}
-                            articleId={articleId}
                             onCommentLike={commentLikeHandler}
                             onCommentDislike={commentDislikeHandler}
                             onCommentDelete={commentDeleteHandler}

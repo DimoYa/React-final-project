@@ -7,7 +7,7 @@ import * as commentService from '../../../../services/commentService';
 import { toast } from 'react-toastify';
 import './CommentItem.css';
 
-export const CommentItem = ({ comment, articleId, onCommentDelete, onCommentLike, onCommentDislike }) => {
+export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onCommentDislike }) => {
   Moment.locale('en');
   const { user } = useContext(AuthContext);
   const [commentVaue, setComment] = useState(comment);
@@ -49,7 +49,6 @@ export const CommentItem = ({ comment, articleId, onCommentDelete, onCommentLike
     const body = commentVaue;
     body.author = user.username;
     body.authorPicture = user.photo;
-    body.articleId = articleId;
     body.likes = commentVaue.likes;
 
     commentService
