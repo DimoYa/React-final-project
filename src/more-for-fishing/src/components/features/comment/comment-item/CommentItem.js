@@ -10,32 +10,42 @@ import './CommentItem.css';
 export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
   Moment.locale('en');
   const { user } = useContext(AuthContext);
+  const [commentVaue, setComment] = useState(comment);
 
-  const canModify = comment.author === user.username || user.isAdmin;
+  const canModify = commentVaue.author === user.username || user.isAdmin;
 
   const canLike =
-    comment.likes.includes(user.id) && comment.author !== user.username;
+  commentVaue.likes.includes(user.id) && commentVaue.author !== user.username;
 
-  const canDislike = comment.likes.includes(user.id);
+  const canDislike = commentVaue.likes.includes(user.id);
   const [isEditMode, setEditMode] = useState(false);
+
+  const changeHandler = (e) => {
+    setComment((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const changeEditMode = () => {
     setEditMode(!isEditMode);
   };
 
   const deleteComment = () => {
-    onCommentDelete(comment._id);
+    onCommentDelete(commentVaue._id);
   };
 
-  const editComment = () => {
-    const body = comment;
+  const editComment = (e) => {
+    e.preventDefault();
+
+    const body = commentVaue;
     body.author = user.username;
     body.authorPicture = user.photo;
     body.articleId = articleId;
-    body.likes = comment.likes;
+    body.likes = commentVaue.likes;
 
     commentService
-      .editComment(comment._id, body)
+      .editComment(commentVaue._id, body)
       .then(() => {
         // todo: reload
         toast.success('Successfully updated comment!');
@@ -47,11 +57,11 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
   };
 
   const likeComment = () => {
-    const body = comment;
+    const body = commentVaue;
     body.likes.push(user.id);
 
     commentService
-      .editComment(comment._id, body)
+      .editComment(commentVaue._id, body)
       .then(() => {
         // todo: reload
         toast.success('Successfully like comment!');
@@ -62,12 +72,12 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
   };
 
   const dislikeComment = () => {
-    const body = comment;
+    const body = commentVaue;
     const index = body.likes.indexOf(user.id);
     body.likes.splice(index, 1);
 
     commentService
-      .editComment(comment._id, body)
+      .editComment(commentVaue._id, body)
       .then(() => {
         // todo: reload
         toast.success('Successfully dislike comment!');
@@ -82,32 +92,32 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
       {!isEditMode && (
         <div className="card mb-4">
           <div className="card-body">
-            <p>{comment.content}</p>
+            <p>{commentVaue.content}</p>
             <div className="d-flex justify-content-between">
               <div className="d-flex flex-row align-items-center">
                 <img
                   src={
-                    comment.authorPicture === '' ||
-                    comment.authorPicture === 'null'
+                    commentVaue.authorPicture === '' ||
+                    commentVaue.authorPicture === 'null'
                       ? defaultAvatarPath
-                      : comment.authorPicture
+                      : commentVaue.authorPicture
                   }
                   alt="avatar"
                   width={25}
                   height={25}
                 />
                 <p className="small mb-0 ms-2 text-muted small">
-                  <i className="fas fa-user" /> {comment.author}
+                  <i className="fas fa-user" /> {commentVaue.author}
                 </p>
                 <p className="small mb-0 ms-2 text-muted small">
                   <b className="mb-1">posted:</b>:
                   <span className="fas fa-calendar p-1">
                     {' '}
-                    {Moment(comment._kmd['ect']).format('dd/MM/yyyy')}{' '}
+                    {Moment(commentVaue._kmd['ect']).format('dd/MM/yyyy')}{' '}
                   </span>
                   <span className="fa fa-clock-o p-1">
                     {' '}
-                    {Moment(comment._kmd['ect']).format('HH:mm')}
+                    {Moment(commentVaue._kmd['ect']).format('HH:mm')}
                   </span>
                 </p>
               </div>
@@ -143,7 +153,7 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
               </div>
             </div>
             <p className="small mb-0 pt-2 text-muted small">
-              <b>Likes:</b> {comment.likes.length}
+              <b>Likes:</b> {commentVaue.likes.length}
             </p>
           </div>
         </div>
@@ -151,7 +161,7 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
       {isEditMode && (
         <form
           className="mb-3"
-          onSubmit={editComment(comment._id, comment.articleId)}
+          onSubmit={editComment}
         >
           {/* content */}
           <p className="form-outline mb-4">
@@ -159,8 +169,9 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
               type="text"
               className="form-control"
               rows={3}
-              formcontrolname="content"
-              defaultValue={comment.content}
+              name="content"
+              value={commentVaue.content}
+              onChange={changeHandler}
             />
           </p>
 

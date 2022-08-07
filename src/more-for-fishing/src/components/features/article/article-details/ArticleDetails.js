@@ -27,6 +27,20 @@ export const ArticleDetails = () => {
       });
   }, []);
 
+  useEffect(() => {
+    commentService
+      .getAllCommentsByArticle(articleId)
+      .then((data) => {
+        setComments(data);
+      })
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  }, []);
+
   const [article, setArticle] = useState({});
   const [comments, setComments] = useState({});
   const [commentId, setCommentId] = useState(null);
@@ -107,19 +121,7 @@ export const ArticleDetails = () => {
       });
   };
 
-  useEffect(() => {
-    commentService
-      .getAllCommentsByArticle(articleId)
-      .then((data) => {
-        setComments(data);
-      })
-      .then(() => {
-        setLoading(false);
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-  }, []);
+
 
   const toggle = () => {
     setExpanding(!isExpanded);
@@ -229,7 +231,7 @@ export const ArticleDetails = () => {
                     <div className="card card-body">
                       {isLoading ? (
                         <Loading />
-                      ) : comments.length !== 0 ? (
+                      ) :
                         comments.map((x) => (
                           <CommentItem
                             key={x._id}
@@ -238,7 +240,7 @@ export const ArticleDetails = () => {
                             onCommentDelete={commentDeleteHandler}
                           />
                         ))
-                      ) : null}
+                      }
                     </div>
                   </div>
                 </div>
