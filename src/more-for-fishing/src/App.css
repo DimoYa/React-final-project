@@ -133,7 +133,7 @@ form .field {
     .card-buttons {
         align-self: center;
     }
-    form.register > .container, form.login > .container, .profile> .container, .article.container, .admin.container {
+    form.register > .container, form.login > .container, .profile> .container, .article.container, .admin.container, .container.updateProfile {
        width: 90% !important;
     }
     .loader {

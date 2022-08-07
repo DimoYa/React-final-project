@@ -79,11 +79,12 @@ export const EditProfile = () => {
       });
   };
 
-  const isFormValid = userData.fullname && !Object.values(errors).some((x) => x);
+  const isFormValid =
+    userData.fullname && !Object.values(errors).some((x) => x);
 
   return (
-    <form onSubmit={editHandler}>
-      <div className="container updateProfile">
+    <div className="container updateProfile">
+      <form onSubmit={editHandler}>
         <fieldset>
           <h3>
             Update user info - <b>{userData.username}</b>
@@ -192,7 +193,7 @@ export const EditProfile = () => {
             </>
           )}
         </fieldset>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
