@@ -1,4 +1,4 @@
-.landing > .card-body {
+.landing > .card-body, .container-fluid {
     background-color: #4ebced;
 }
 
