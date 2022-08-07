@@ -33,24 +33,20 @@ export const Profile = () => {
 
   const deleteHandler = () => {
     submitHandler(
-      confirmDeleteHandler,
+      ()=> (userService
+        .deleteUser(userId)
+        .then(() => {
+          userLogout();
+          localStorage.clear();
+          navigate('/');
+          toast.success('Successfully deleted profile!');
+        })
+        .catch((err) => {
+          toast.error(err);
+        })),
       'Confirm deletion',
       'Are you sure that you want to delete your profile?'
     );
-  };
-
-  const confirmDeleteHandler = () => {
-    userService
-      .deleteUser(userId)
-      .then(() => {
-        userLogout();
-        localStorage.clear();
-        navigate('/');
-        toast.success('Successfully deleted profile!');
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
   };
 
   return (

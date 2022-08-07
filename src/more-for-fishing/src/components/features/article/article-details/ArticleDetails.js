@@ -44,8 +44,7 @@ export const ArticleDetails = () => {
   }, []);
 
   const [article, setArticle] = useState({});
-  const [comments, setComments] = useState({});
-  const [commentId, setCommentId] = useState(null);
+  const [comments, setComments] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isExpanded, setExpanding] = useState(false);
   const { user, photo } = useContext(AuthContext);
@@ -79,28 +78,24 @@ export const ArticleDetails = () => {
   };
 
   const commentDeleteHandler = (commentIdParam) => {
-    setCommentId(commentIdParam);
     submitHandler(
-      commentConfirmDeleteHandler,
+      () =>
+        commentService
+          .deleteComment(commentIdParam)
+          .then(() => {
+            toast.success('Successfully deleted comment!');
+          })
+          .then(() => {
+            commentService.getAllCommentsByArticle(articleId).then((data) => {
+              setComments(data);
+            });
+          })
+          .catch((err) => {
+            toast.error(err);
+          }),
       'Confirm deletion',
       'Are you sure that you want to delete the comment?'
     );
-  };
-
-  const commentConfirmDeleteHandler = () => {
-    commentService
-      .deleteComment(commentId)
-      .then(() => {
-        toast.success('Successfully deleted comment!');
-      })
-      .then(() => {
-        commentService.getAllCommentsByArticle(articleId).then((data) => {
-          setComments(data);
-        });
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
   };
 
   const commentLikeHandler = (comment) => {
@@ -144,22 +139,18 @@ export const ArticleDetails = () => {
 
   const articleDeleteHandler = () => {
     submitHandler(
-      articleConfirmDeleteHandler,
+      () => (articleService
+        .deleteArticle(articleId)
+        .then(() => {
+          navigate('/article/list');
+          toast.success('Successfully deleted article!');
+        })
+        .catch((err) => {
+          toast.error(err);
+        })),
       'Confirm deletion',
       `Are you sure that you want to delete ${article.headline}?`
     );
-  };
-
-  const articleConfirmDeleteHandler = () => {
-    articleService
-      .deleteArticle(articleId)
-      .then(() => {
-        navigate('/article/list');
-        toast.success('Successfully deleted article!');
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
   };
 
   const toggle = () => {
