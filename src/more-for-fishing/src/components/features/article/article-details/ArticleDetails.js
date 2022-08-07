@@ -29,6 +29,7 @@ export const ArticleDetails = () => {
 
   const [article, setArticle] = useState({});
   const [comments, setComments] = useState({});
+  const [commentId, setCommentId] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [isExpanded, setExpanding] = useState(false);
   const { user } = useContext(AuthContext);
@@ -38,7 +39,7 @@ export const ArticleDetails = () => {
     return articleAuthor === user.username || user.isAdmin;
   };
 
-  const createHandler = (e, values) => {
+  const commentCreateHandler = (e, values) => {
     e.preventDefault();
 
     values.articleId = articleId;
@@ -61,15 +62,40 @@ export const ArticleDetails = () => {
       });
   };
 
-  const deleteHandler = () => {
+  const commentDeleteHandler = (commentId) => {
+    setCommentId(commentId);
     submitHandler(
-      confirmDeleteHandler,
+      commentConfirmDeleteHandler,
+      'Confirm deletion',
+      'Are you sure that you want to delete the comment?'
+    );
+  };
+
+  const commentConfirmDeleteHandler = () => {
+    commentService
+        .deleteComment(commentId)
+        .then(() => {
+          toast.success('Successfully deleted comment!');
+        })
+        .then(() => {
+          commentService.getAllCommentsByArticle(articleId).then((data) => {
+            setComments(data);
+          });
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
+  };
+
+  const articleDeleteHandler = () => {
+    submitHandler(
+      articleConfirmDeleteHandler,
       'Confirm deletion',
       `Are you sure that you want to delete ${article.headline}?`
     );
   };
 
-  const confirmDeleteHandler = () => {
+  const articleConfirmDeleteHandler = () => {
     articleService
       .deleteArticle(articleId)
       .then(() => {
@@ -166,7 +192,7 @@ export const ArticleDetails = () => {
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={deleteHandler}
+                    onClick={articleDeleteHandler}
                   >
                     Delete article
                   </button>
@@ -178,11 +204,10 @@ export const ArticleDetails = () => {
       </div>
 
       <div className="row d-flex justify-content-center">
-        
         <div className="col-md-8 col-lg-6">
           <div className="shadow-0 border" id="comments">
             <div className="card-body p-4">
-              <CommentCreate onCommentCreate={createHandler} />
+              <CommentCreate onCommentCreate={commentCreateHandler} />
               {comments.length > 0 && (
                 <div className="accordion accordion-flush mt-5">
                   <button
@@ -210,6 +235,7 @@ export const ArticleDetails = () => {
                             key={x._id}
                             comment={x}
                             articleId={articleId}
+                            onCommentDelete={commentDeleteHandler}
                           />
                         ))
                       ) : null}

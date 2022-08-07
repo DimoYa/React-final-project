@@ -58,7 +58,7 @@ export const Landing = () => {
       {isLogged && (
         <>
           <div>
-            <div className="card text-white bg-info mb-3">
+            <div className="card text-white bg-info mb-3 landing">
               {isAdmin && (
                 <>
                   <div className="card-body">
