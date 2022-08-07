@@ -25,7 +25,7 @@ export const ArticleDetails = () => {
       .catch((err) => {
         toast.error(err);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const ArticleDetails = () => {
       .catch((err) => {
         toast.error(err);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [article, setArticle] = useState({});
@@ -48,7 +48,7 @@ export const ArticleDetails = () => {
   const [commentId, setCommentId] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [isExpanded, setExpanding] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, photo } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const canModify = (articleAuthor) => {
@@ -60,7 +60,7 @@ export const ArticleDetails = () => {
 
     values.articleId = articleId;
     values.author = user.username;
-    values.authorPicture = user.photo;
+    values.authorPicture = photo;
     values.likes = [];
 
     commentService
@@ -89,18 +89,18 @@ export const ArticleDetails = () => {
 
   const commentConfirmDeleteHandler = () => {
     commentService
-        .deleteComment(commentId)
-        .then(() => {
-          toast.success('Successfully deleted comment!');
-        })
-        .then(() => {
-          commentService.getAllCommentsByArticle(articleId).then((data) => {
-            setComments(data);
-          });
-        })
-        .catch((err) => {
-          toast.error(err);
+      .deleteComment(commentId)
+      .then(() => {
+        toast.success('Successfully deleted comment!');
+      })
+      .then(() => {
+        commentService.getAllCommentsByArticle(articleId).then((data) => {
+          setComments(data);
         });
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   const commentLikeHandler = (comment) => {
@@ -111,7 +111,8 @@ export const ArticleDetails = () => {
       .editComment(comment._id, body)
       .then(() => {
         toast.success('Successfully like comment!');
-      }).then(() => {
+      })
+      .then(() => {
         commentService.getAllCommentsByArticle(articleId).then((data) => {
           setComments(data);
         });
@@ -130,7 +131,8 @@ export const ArticleDetails = () => {
       .editComment(comment._id, body)
       .then(() => {
         toast.success('Successfully dislike comment!');
-      }).then(() => {
+      })
+      .then(() => {
         commentService.getAllCommentsByArticle(articleId).then((data) => {
           setComments(data);
         });
@@ -189,6 +191,10 @@ export const ArticleDetails = () => {
                   <span className="fas fa-calendar p-1">
                     {' '}
                     {Moment(article._kmd['ect']).format('DD MMM yyyy')}
+                  </span>
+                  <span className="fa fa-clock-o p-1">
+                    {' '}
+                    {Moment(article._kmd['ect']).format('HH:mm')}
                   </span>
                 </div>
               </div>
@@ -268,7 +274,7 @@ export const ArticleDetails = () => {
                     <div className="card card-body">
                       {isLoading ? (
                         <Loading />
-                      ) :
+                      ) : (
                         comments.map((x) => (
                           <CommentItem
                             key={x._id}
@@ -278,7 +284,7 @@ export const ArticleDetails = () => {
                             onCommentDelete={commentDeleteHandler}
                           />
                         ))
-                      }
+                      )}
                     </div>
                   </div>
                 </div>
