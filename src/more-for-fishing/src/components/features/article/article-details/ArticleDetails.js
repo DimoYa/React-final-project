@@ -151,7 +151,7 @@ export const ArticleDetails = () => {
                   <b>Published:</b>
                   <span className="fas fa-calendar p-1">
                     {' '}
-                    {Moment(article._kmd['ect']).format('d MMM yyyy')}
+                    {Moment(article._kmd['ect']).format('DD MMM yyyy')}
                   </span>
                 </div>
               </div>
@@ -171,7 +171,7 @@ export const ArticleDetails = () => {
                       <b>Modified:</b>
                       <span className="fas fa-calendar p-1">
                         {' '}
-                        {Moment(article._kmd['lmt']).format('d MMM yyyy')}
+                        {Moment(article._kmd['lmt']).format('DD MMM yyyy')}
                       </span>
                       <span className="fa fa-clock-o p-1">
                         {' '}

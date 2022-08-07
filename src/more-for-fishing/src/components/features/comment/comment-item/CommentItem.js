@@ -113,7 +113,7 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
                   <b className="mb-1">posted:</b>:
                   <span className="fas fa-calendar p-1">
                     {' '}
-                    {Moment(commentVaue._kmd['ect']).format('dd/MM/yyyy')}{' '}
+                    {Moment(commentVaue._kmd['ect']).format('DD/MM/yyyy')}{' '}
                   </span>
                   <span className="fa fa-clock-o p-1">
                     {' '}

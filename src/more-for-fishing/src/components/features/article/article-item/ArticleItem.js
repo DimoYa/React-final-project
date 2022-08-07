@@ -22,12 +22,12 @@ export const ArticleItem = ({ article }) => {
           {article._kmd['ect'] === article._kmd['lmt']
             ? <>
               <b>Published:</b>
-              <span className="fas fa-calendar p-1"> {Moment(article._kmd['ect']).format('d MMM yyyy')}</span>
+              <span className="fas fa-calendar p-1"> {Moment(article._kmd['ect']).format('DD MMM yyyy')}</span>
               <span className="fa fa-clock-o p-1"> {Moment(article._kmd['ect']).format('HH:mm')}</span>
             </>
             : <>
               <b>Modified:</b>
-              <span className="fas fa-calendar p-1"> {Moment(article._kmd['lmt']).format('d MMM yyyy')}</span>
+              <span className="fas fa-calendar p-1"> {Moment(article._kmd['lmt']).format('DD MMM yyyy')}</span>
               <span className="fa fa-clock-o p-1"> {Moment(article._kmd['lmt']).format('HH:mm')}</span>
             </>}
         </div>
