@@ -24,6 +24,7 @@ export const EditProfile = () => {
       .catch((err) => {
         console.log(err);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [user, setUser] = useState({});

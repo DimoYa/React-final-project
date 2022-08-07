@@ -25,6 +25,7 @@ export const ArticleDetails = () => {
       .catch((err) => {
         toast.error(err);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export const ArticleDetails = () => {
       .catch((err) => {
         toast.error(err);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [article, setArticle] = useState({});

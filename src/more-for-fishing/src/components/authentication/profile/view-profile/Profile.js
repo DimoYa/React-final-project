@@ -28,6 +28,7 @@ export const Profile = () => {
       .catch((err) => {
         toast.error(err);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteHandler = () => {
