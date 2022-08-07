@@ -5,7 +5,7 @@ import * as userService from '../../../../services/userService';
 import defaultAvatarPath from '../../../../assets/default-avatar-profile.png';
 import { useContext, useEffect, useState } from 'react';
 import { Loading } from '../../../shared/Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { submitHandler } from '../../../shared/confirm-box/Confirm';
 import { AuthContext } from '../../../../context/AuthContext';
@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 export const Profile = () => {
   const { user, userLogout } = useContext(AuthContext);
-  const userId = user.id;
+  const { userId } = useParams();
   const isAdmin = user.isAdmin;
 
   const [userProfile, setUser] = useState({});

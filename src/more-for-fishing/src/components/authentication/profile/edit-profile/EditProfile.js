@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../../context/AuthContext';
 
-
 const codes = [
   { value: '+44', label: '+44' },
   { value: '+359', label: '+359' },
@@ -16,22 +15,21 @@ const codes = [
 export const EditProfile = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const { userPhoto } = useContext(AuthContext);
+  const { userPhoto, user } = useContext(AuthContext);
 
   useEffect(() => {
     userService
       .getUser(userId)
       .then((data) => {
         setUser(data);
-        
       })
       .catch((err) => {
         console.log(err);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [user, setUser] = useState({});
+  const [userData, setUser] = useState({});
   const [errors, setErrors] = useState({});
 
   const changeHandler = (e) => {
@@ -45,7 +43,7 @@ export const EditProfile = () => {
     setErrors((state) => ({
       ...state,
       [e.target.name]: !/^([A-Z][a-z]+\s[A-Z][a-z]+)$/.test(
-        user[e.target.name]
+        userData[e.target.name]
       ),
     }));
   };
@@ -53,7 +51,7 @@ export const EditProfile = () => {
   const phoneValidator = (e) => {
     setErrors((state) => ({
       ...state,
-      [e.target.name]: !/^\d{9}$/.test(user[e.target.name]),
+      [e.target.name]: !/^\d{9}$/.test(userData[e.target.name]),
     }));
   };
 
@@ -61,16 +59,18 @@ export const EditProfile = () => {
     e.preventDefault();
 
     const body = {
-      fullname: user.fullname,
-      phoneCode: user.phoneCode,
-      phoneNumber: user.phoneNumber,
-      photo: user.photo,
+      fullname: userData.fullname,
+      phoneCode: userData.phoneCode,
+      phoneNumber: userData.phoneNumber,
+      photo: userData.photo,
     };
 
     userService
       .updateUser(userId, body)
       .then(() => {
-        userPhoto(body.photo);
+        if (user.id === userId) {
+          userPhoto(body.photo);
+        }
         toast.success('Successfully updated profile!');
         navigate(`/user/profile/${userId}`);
       })
@@ -79,16 +79,16 @@ export const EditProfile = () => {
       });
   };
 
-  const isFormValid = user.fullname && !Object.values(errors).some((x) => x);
+  const isFormValid = userData.fullname && !Object.values(errors).some((x) => x);
 
   return (
     <form onSubmit={editHandler}>
       <div className="container updateProfile">
         <fieldset>
           <h3>
-            Update user info - <b>{user.username}</b>
+            Update user info - <b>{userData.username}</b>
           </h3>
-          {Object.keys(user).length === 0 ? (
+          {Object.keys(userData).length === 0 ? (
             <Loading />
           ) : (
             <>
@@ -102,7 +102,7 @@ export const EditProfile = () => {
                 <input
                   name="fullname"
                   placeholder="Full Name"
-                  defaultValue={user.fullname || ''}
+                  defaultValue={userData.fullname || ''}
                   onChange={changeHandler}
                   onBlur={(e) => fullNameValidator(e)}
                 />
@@ -127,12 +127,16 @@ export const EditProfile = () => {
                   name="phoneCode"
                   id="phoneCode"
                   className="phoneCode"
-                  defaultValue={user.phoneCode}
+                  defaultValue={userData.phoneCode}
                   onChange={changeHandler}
                 >
                   {codes.map((e, key) => {
                     return (
-                      <option key={key} value={e.value}  selected={e.value === user.phoneCode}>
+                      <option
+                        key={key}
+                        value={e.value}
+                        selected={e.value === userData.phoneCode}
+                      >
                         {e.label}
                       </option>
                     );
@@ -143,7 +147,7 @@ export const EditProfile = () => {
                   name="phoneNumber"
                   id="phoneNumber"
                   placeholder="885 888 888"
-                  defaultValue={user.phoneNumber}
+                  defaultValue={userData.phoneNumber}
                   onChange={changeHandler}
                   onBlur={(e) => phoneValidator(e)}
                 />
@@ -165,11 +169,17 @@ export const EditProfile = () => {
                   type="text"
                   placeholder="Add image link"
                   onChange={changeHandler}
-                  defaultValue={user.photo}
+                  defaultValue={userData.photo}
                 />
               </p>
               <div className="buttons">
-                <Link to={`/user/profile/${userId}`} style={{verticalAlign: 'bottom'}} className="btn btn-warning">Cancel</Link>
+                <Link
+                  to={`/user/profile/${userId}`}
+                  style={{ verticalAlign: 'bottom' }}
+                  className="btn btn-warning"
+                >
+                  Cancel
+                </Link>
                 &nbsp;
                 <button
                   type="submit"

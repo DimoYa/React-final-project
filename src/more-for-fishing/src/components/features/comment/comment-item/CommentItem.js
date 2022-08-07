@@ -14,7 +14,7 @@ export const CommentItem = ({
   onCommentDislike,
 }) => {
   Moment.locale('en');
-  const { user } = useContext(AuthContext);
+  const { user, photo } = useContext(AuthContext);
   const [commentVaue, setComment] = useState(comment);
 
   const canModify = commentVaue.author === user.username || user.isAdmin;
@@ -55,6 +55,7 @@ export const CommentItem = ({
 
     const body = commentVaue;
     body.author = user.username;
+    body.authorPicture = photo;
     body.likes = commentVaue.likes;
 
     commentService
