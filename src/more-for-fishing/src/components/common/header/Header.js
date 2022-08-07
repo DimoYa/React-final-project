@@ -8,12 +8,12 @@ import { AuthContext } from '../../../context/AuthContext';
 
 export const Header = () => {
 
-  const { user } = useContext(AuthContext);
+  const { user, photo } = useContext(AuthContext);
 
   const isLogged = user.accessToken;
   const isAdmin = user.isAdmin;
   const userId = user.id;
-  const avatar = user.photo;
+  const avatar = photo;
   let isExpanded = false;
 
   const toggle = () => {

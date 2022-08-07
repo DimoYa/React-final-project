@@ -7,6 +7,7 @@ export const AuthProvider = ({
     children,
 }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
+    const [photo, setPhoto] = useLocalStorage('photo', {});
 
     const userLogin = (authData) => {
         setAuth(authData);
@@ -16,11 +17,18 @@ export const AuthProvider = ({
         setAuth({});
     };
 
+    const userPhoto = (photoData) => {
+        setPhoto(photoData);
+    };
+
+
     return (
         <AuthContext.Provider value={{
             user: auth,
+            photo: photo,
             userLogin,
             userLogout,
+            userPhoto,
         }}>
             {children}
         </AuthContext.Provider>

@@ -14,7 +14,7 @@ export const Login = () => {
     password: '',
   });
 
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, userPhoto } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const changeHandler = (e) => {
@@ -30,11 +30,12 @@ export const Login = () => {
     authenticationService
       .login(values)
       .then((authData) => {
+        const photo = authData['photo'];
+
         const sessionData = {
           accessToken: authData['_kmd']['authtoken'],
           username: authData['username'],
           id: authData['_id'],
-          photo: authData['photo'],
           isAdmin:
             authData['_kmd']['roles'] !== undefined &&
             authData['_kmd']['roles'].length !== 0
@@ -42,6 +43,7 @@ export const Login = () => {
               : false,
         };
         userLogin(sessionData);
+        userPhoto(photo);
         toast.success('Successfully Login!');
         navigate('/');
       })

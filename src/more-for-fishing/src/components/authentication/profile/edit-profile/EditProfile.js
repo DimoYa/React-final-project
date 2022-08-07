@@ -1,9 +1,11 @@
 import { Loading } from '../../../shared/Loading';
 import * as userService from '../../../../services/userService';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../../../context/AuthContext';
+
 
 const codes = [
   { value: '+44', label: '+44' },
@@ -14,12 +16,14 @@ const codes = [
 export const EditProfile = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+  const { userPhoto } = useContext(AuthContext);
 
   useEffect(() => {
     userService
       .getUser(userId)
       .then((data) => {
         setUser(data);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +70,7 @@ export const EditProfile = () => {
     userService
       .updateUser(userId, body)
       .then(() => {
-        localStorage['photo'] = body.photo;
+        userPhoto(body.photo);
         toast.success('Successfully updated profile!');
         navigate(`/user/profile/${userId}`);
       })

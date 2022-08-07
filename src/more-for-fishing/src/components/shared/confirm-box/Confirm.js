@@ -9,7 +9,7 @@ export const submitHandler = (handler, title, msg) => {
     buttons: [
       {
         label: 'Yes',
-        onClick: () => handler(),
+        onClick: (e) => handler(e),
       },
       {
         label: 'No',

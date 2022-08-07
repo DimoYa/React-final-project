@@ -27,7 +27,7 @@ export const Register = () => {
   });
 
   const navigate = useNavigate();
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, userPhoto } = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -47,18 +47,20 @@ export const Register = () => {
         toast.success('Successfully Registered!');
       }).then(() => {
         authenticationService.login({ username, password }).then((authData) => {
+          const photo = authData['photo'];
+
           const sessionData = {
             accessToken: authData['_kmd']['authtoken'],
             username: authData['username'],
             id: authData['_id'],
-            photo: authData['photo'],
             isAdmin:
               authData['_kmd']['roles'] !== undefined &&
               authData['_kmd']['roles'].length !== 0
                 ? true
                 : false,
           };
-          userLogin(sessionData)
+          userLogin(sessionData);
+          userPhoto(photo);
           navigate('/');
         })
       })
