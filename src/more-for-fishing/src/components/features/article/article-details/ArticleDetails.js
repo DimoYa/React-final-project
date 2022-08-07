@@ -101,6 +101,43 @@ export const ArticleDetails = () => {
         });
   };
 
+  const commentLikeHandler = (comment) => {
+    const body = comment;
+    body.likes.push(user.id);
+
+    commentService
+      .editComment(comment._id, body)
+      .then(() => {
+        toast.success('Successfully like comment!');
+      }).then(() => {
+        commentService.getAllCommentsByArticle(articleId).then((data) => {
+          setComments(data);
+        });
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
+
+  const commentDislikeHandler = (comment) => {
+    const body = comment;
+    const index = body.likes.indexOf(user.id);
+    body.likes.splice(index, 1);
+
+    commentService
+      .editComment(comment._id, body)
+      .then(() => {
+        toast.success('Successfully dislike comment!');
+      }).then(() => {
+        commentService.getAllCommentsByArticle(articleId).then((data) => {
+          setComments(data);
+        });
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
+
   const articleDeleteHandler = () => {
     submitHandler(
       articleConfirmDeleteHandler,
@@ -120,8 +157,6 @@ export const ArticleDetails = () => {
         toast.error(err);
       });
   };
-
-
 
   const toggle = () => {
     setExpanding(!isExpanded);
@@ -237,6 +272,8 @@ export const ArticleDetails = () => {
                             key={x._id}
                             comment={x}
                             articleId={articleId}
+                            onCommentLike={commentLikeHandler}
+                            onCommentDislike={commentDislikeHandler}
                             onCommentDelete={commentDeleteHandler}
                           />
                         ))

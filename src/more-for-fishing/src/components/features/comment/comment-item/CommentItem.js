@@ -7,7 +7,7 @@ import * as commentService from '../../../../services/commentService';
 import { toast } from 'react-toastify';
 import './CommentItem.css';
 
-export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
+export const CommentItem = ({ comment, articleId, onCommentDelete, onCommentLike, onCommentDislike }) => {
   Moment.locale('en');
   const { user } = useContext(AuthContext);
   const [commentVaue, setComment] = useState(comment);
@@ -15,7 +15,7 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
   const canModify = commentVaue.author === user.username || user.isAdmin;
 
   const canLike =
-  commentVaue.likes.includes(user.id) && commentVaue.author !== user.username;
+  !commentVaue.likes.includes(user.id) && commentVaue.author !== user.username;
 
   const canDislike = commentVaue.likes.includes(user.id);
   const [isEditMode, setEditMode] = useState(false);
@@ -35,6 +35,14 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
     onCommentDelete(commentVaue._id);
   };
 
+  const likeComment = () => {
+    onCommentLike(commentVaue);
+  };
+
+  const dislikeComment = () => {
+    onCommentDislike(commentVaue);
+  };
+
   const editComment = (e) => {
     e.preventDefault();
 
@@ -47,40 +55,8 @@ export const CommentItem = ({ comment, articleId, onCommentDelete }) => {
     commentService
       .editComment(commentVaue._id, body)
       .then(() => {
-        // todo: reload
         toast.success('Successfully updated comment!');
         setEditMode(false);
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-  };
-
-  const likeComment = () => {
-    const body = commentVaue;
-    body.likes.push(user.id);
-
-    commentService
-      .editComment(commentVaue._id, body)
-      .then(() => {
-        // todo: reload
-        toast.success('Successfully like comment!');
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-  };
-
-  const dislikeComment = () => {
-    const body = commentVaue;
-    const index = body.likes.indexOf(user.id);
-    body.likes.splice(index, 1);
-
-    commentService
-      .editComment(commentVaue._id, body)
-      .then(() => {
-        // todo: reload
-        toast.success('Successfully dislike comment!');
       })
       .catch((err) => {
         toast.error(err);
