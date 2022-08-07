@@ -28,7 +28,7 @@ export const deleteComment = async (commentId) => {
 
 export const deleteAllCommentsByArticle = async (articleId) => {
   return await request.del(
-    `${this.commentEndPoint}?query={"articleId":"${articleId}"}`,
+    `${commentEndPoint}?query={"articleId":"${articleId}"}`,
     {}
   );
 };

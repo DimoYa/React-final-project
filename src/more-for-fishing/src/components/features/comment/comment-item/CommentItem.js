@@ -7,7 +7,12 @@ import * as commentService from '../../../../services/commentService';
 import { toast } from 'react-toastify';
 import './CommentItem.css';
 
-export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onCommentDislike }) => {
+export const CommentItem = ({
+  comment,
+  onCommentDelete,
+  onCommentLike,
+  onCommentDislike,
+}) => {
   Moment.locale('en');
   const { user } = useContext(AuthContext);
   const [commentVaue, setComment] = useState(comment);
@@ -15,10 +20,12 @@ export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onComment
   const canModify = commentVaue.author === user.username || user.isAdmin;
 
   const canLike =
-  !commentVaue.likes.includes(user.id) && commentVaue.author !== user.username;
+    !commentVaue.likes.includes(user.id) &&
+    commentVaue.author !== user.username;
 
   const canDislike = commentVaue.likes.includes(user.id);
   const [isEditMode, setEditMode] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const changeHandler = (e) => {
     setComment((state) => ({
@@ -48,7 +55,6 @@ export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onComment
 
     const body = commentVaue;
     body.author = user.username;
-    body.authorPicture = user.photo;
     body.likes = commentVaue.likes;
 
     commentService
@@ -61,6 +67,16 @@ export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onComment
         toast.error(err);
       });
   };
+
+  const requiredField = (e) => {
+    setErrors((state) => ({
+      ...state,
+      [e.target.name]: commentVaue[e.target.name].length < 1,
+    }));
+  };
+
+  const isFormValid =
+    commentVaue.content.length && !Object.values(errors).some((x) => x);
 
   return (
     <div>
@@ -134,10 +150,7 @@ export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onComment
         </div>
       )}
       {isEditMode && (
-        <form
-          className="mb-3"
-          onSubmit={editComment}
-        >
+        <form className="mb-3" onSubmit={editComment}>
           {/* content */}
           <p className="form-outline mb-4">
             <textarea
@@ -147,10 +160,15 @@ export const CommentItem = ({ comment, onCommentDelete, onCommentLike, onComment
               name="content"
               value={commentVaue.content}
               onChange={changeHandler}
+              onBlur={(e) => requiredField(e)}
             />
           </p>
 
-          <button type="submit" className="btn btn-primary btn-sm mr-1">
+          {errors.content && (
+            <p className="alert alert-danger">Field is required!!</p>
+          )}
+
+          <button type="submit" className="btn btn-primary btn-sm mr-1" disabled={!isFormValid}>
             {' '}
             Edit comment
           </button>

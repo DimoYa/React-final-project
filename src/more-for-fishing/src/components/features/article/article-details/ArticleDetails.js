@@ -139,15 +139,19 @@ export const ArticleDetails = () => {
 
   const articleDeleteHandler = () => {
     submitHandler(
-      () => (articleService
-        .deleteArticle(articleId)
-        .then(() => {
-          navigate('/article/list');
-          toast.success('Successfully deleted article!');
-        })
-        .catch((err) => {
-          toast.error(err);
-        })),
+      () =>
+        articleService
+          .deleteArticle(articleId)
+          .then(() => {
+            commentService.deleteAllCommentsByArticle(articleId);
+          })
+          .then(() => {
+            navigate('/article/list');
+            toast.success('Successfully deleted article!');
+          })
+          .catch((err) => {
+            toast.error(err);
+          }),
       'Confirm deletion',
       `Are you sure that you want to delete ${article.headline}?`
     );
