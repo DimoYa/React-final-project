@@ -5,10 +5,19 @@ import { toast } from 'react-toastify';
 
 import './Admin.css';
 import { Loading } from '../shared/Loading';
+import { Pagination } from '../shared/pagination/Pagination';
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(3);
+
+  const indexOfLastPost = currentPage * usersPerPage;
+  const indexOfFirstPost = indexOfLastPost - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     adminService
@@ -63,7 +72,7 @@ const Admin = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          users.map((user) => {
+          currentUsers.map((user) => {
             return (
               <li className="list-group-item" key={user._id}>
                 <h5>{user.username}</h5>
@@ -126,6 +135,11 @@ const Admin = () => {
           })
         )}
       </ul>
+      <Pagination
+        itemsPerPage={usersPerPage}
+        totalItems={users.length}
+        paginate={paginate}
+      />
     </div>
   );
 };
