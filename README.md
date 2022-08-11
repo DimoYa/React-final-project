@@ -68,4 +68,4 @@ npm start
 
 # Deployment
 
-TBD
+Application is deployed with Firebase: https://more-for-fishing.web.app/
