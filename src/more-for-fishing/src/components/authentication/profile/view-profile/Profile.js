@@ -79,7 +79,6 @@ export const Profile = () => {
                 <p>
                   {userProfile.phoneCode} {userProfile.phoneNumber}
                 </p>
-                )
               </div>
             )}
             <hr />
