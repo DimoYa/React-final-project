@@ -42,7 +42,7 @@ export const EditProfile = () => {
   const fullNameValidator = (e) => {
     setErrors((state) => ({
       ...state,
-      [e.target.name]: !/^([A-Z][a-z]+\s[A-Z][a-z]+)$/.test(
+      [e.target.name]: !/^([A-z]+\s[A-z]+)$/.test(
         userData[e.target.name]
       ),
     }));

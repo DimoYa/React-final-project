@@ -116,28 +116,28 @@ export const CommentItem = ({
               <div className="d-flex flex-row align-items-center">
                 {canModify && (
                   <i
-                    className="fas fa-edit mx-2 fa-xs text-black"
+                    className="fas fa-edit mx-2 fa-xs text-black i-btn"
                     onClick={changeEditMode}
                     title="edit comment"
                   ></i>
                 )}
                 {canModify && (
                   <i
-                    className="far fa-trash-alt mx-2 fa-xs text-black"
+                    className="far fa-trash-alt mx-2 fa-xs text-black i-btn"
                     onClick={deleteComment}
                     title="delete comment"
                   ></i>
                 )}
                 {canLike && (
                   <i
-                    className="fa fa-thumbs-o-up mx-2 fa-xs text-black"
+                    className="fa fa-thumbs-o-up mx-2 fa-xs text-black i-btn"
                     onClick={likeComment}
                     title="like comment"
                   ></i>
                 )}
                 {canDislike && (
                   <i
-                    className="fa fa-thumbs-o-down mx-2 fa-xs text-black"
+                    className="fa fa-thumbs-o-down mx-2 fa-xs text-black i-btn"
                     onClick={dislikeComment}
                     title="dislike comment"
                   ></i>

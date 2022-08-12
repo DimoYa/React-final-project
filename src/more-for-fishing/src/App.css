@@ -36,7 +36,8 @@ h5 {
 
 
 a:hover,
-button:hover {
+button:hover,
+i:hover.i-btn {
     cursor: pointer;
 }
 

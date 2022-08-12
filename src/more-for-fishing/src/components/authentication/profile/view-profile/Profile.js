@@ -51,7 +51,7 @@ export const Profile = () => {
 
   return (
     <div className="profile">
-      <div className="container">
+      <div className="container mb-1 text-muted">
         {Object.keys(userProfile).length === 0 ? (
           <Loading />
         ) : (
@@ -64,7 +64,6 @@ export const Profile = () => {
               }
               alt="default user"
             />
-            <h3>User Info:</h3>
             <div className="flex">
               <p>Username: </p>
               <p>{userProfile.username}</p>
