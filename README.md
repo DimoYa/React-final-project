@@ -68,4 +68,4 @@ npm start
 
 # Deployment
 
-Application is deployed with Firebase: https://more-for-fishing.web.app/
+Application is deployed with Firebase: https://more-for-fishing-react.web.app/
