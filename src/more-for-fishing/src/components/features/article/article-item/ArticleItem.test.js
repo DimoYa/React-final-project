@@ -4,7 +4,7 @@ import { ArticleItem } from './ArticleItem';
 import { MemoryRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 
-// examle of rendering component tets
+// examle of rendering component test
 describe('Article item component', () => {
     it('should render article item', () => {
 

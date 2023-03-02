@@ -36,7 +36,7 @@ describe('Article create component', () => {
 
             await userEvent.click(submitBtn);
 
-            expect(toast.success).toBeDefined();
+            expect(toast.success).toBeInTheDocument();
         })
     });
 });
